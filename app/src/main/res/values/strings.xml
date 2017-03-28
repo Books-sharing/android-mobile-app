@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Book</string>
+    <string name="hello_world">hello world</string>
+    <string name="wypozycz_ksiazke">Wypożycz książkę</string>
+    <string name="oddaj_ksiazke">Oddaj książkę</string>
+    <string name="moje_kolejki">Moje miejsce w kolejkach</string>
+    <string name="szukaj_ksiazki">Szukaj książki</string>
+    <string name="komentarz">Dodaj komentarz</string>
+</resources>
