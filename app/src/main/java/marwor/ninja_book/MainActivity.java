@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.comment:
                 clickToAction= new Intent(this, AddComment.class);
                 startActivity(clickToAction);
+                //sddf
                 break;
 
             default:
