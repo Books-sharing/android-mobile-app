@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Book</string>
+    <string name="app_name"> Ninja Book</string>
     <string name="hello_world">hello world</string>
     <string name="wypozycz_ksiazke">Wypożycz książkę</string>
     <string name="oddaj_ksiazke">Oddaj książkę</string>
