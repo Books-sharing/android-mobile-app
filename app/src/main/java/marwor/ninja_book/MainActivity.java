@@ -8,12 +8,12 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    Button buttonBorrow;
-    Button buttonReturn;
-    Button buttonQueue;
-    Button buttonSearch;
-    Button buttonComment;
-    Intent clickToAction;
+    private Button buttonBorrow;
+    private Button buttonReturn;
+    private Button buttonQueue;
+    private Button buttonSearch;
+    private Button buttonComment;
+    private Intent clickToAction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
