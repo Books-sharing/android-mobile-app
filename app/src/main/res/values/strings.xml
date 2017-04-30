@@ -7,4 +7,5 @@
     <string name="szukaj_ksiazki">Szukaj książki</string>
     <string name="komentarz">Dodaj komentarz</string>
     <string name="TakePicture">Skanuj kod QR</string>
+    <string name="title_activity_loading">LoadingActivity</string>
 </resources>

@@ -51,7 +51,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private QRCodeReader qrCodeReader;
     private BinaryBitmap binaryBitmap;
     private Result result;
-    BinaryBitmapMaker binaryBitmapMaker;
+    private BinaryBitmapMaker binaryBitmapMaker;
 
 
 
@@ -76,6 +76,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v){
         mCamera.takePicture(null,null,null,mPicture);
+
 
     }
 
@@ -150,10 +151,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
                 result=qrCodeReader.decode(binaryBitmap);
                 Log.d(TAG,"rezultat"+result.getText());
             }
-            catch (NotFoundException e) { e.printStackTrace(); }
-            catch (ChecksumException e) { e.printStackTrace(); }
-            catch (FormatException e) { e.printStackTrace(); }
+            catch (NotFoundException|ChecksumException|FormatException e) { e.printStackTrace(); }
 
+            Intent i = new Intent(CameraActivity.this, LoadingActivity.class);
+            i.putExtra("qrResult",result.getText());
+            startActivity(i);
 
 
 
