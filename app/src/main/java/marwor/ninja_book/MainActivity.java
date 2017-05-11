@@ -14,11 +14,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonSearch;
     private Button buttonComment;
     private Intent clickToAction;
+    private static boolean IsUserLogin=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if(IsUserLogin==false){
+            Intent startLoggingActivity=new Intent(this,LoginActivity.class);
+            startActivity(startLoggingActivity);
+        }
         buttonBorrow=(Button) findViewById(R.id.borrow);
         buttonReturn=(Button) findViewById(R.id.returnBook);
         buttonQueue=(Button) findViewById(R.id.queue);
