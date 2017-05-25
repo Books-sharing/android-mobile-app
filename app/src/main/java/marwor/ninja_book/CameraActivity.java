@@ -75,10 +75,29 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     }
     @Override
     public void onClick(View v){
-        mCamera.takePicture(null,null,null,mPicture);
-
-
+        String focusMode = mCamera.getParameters().getFocusMode();
+        if(focusMode.equals(Camera.Parameters.FOCUS_MODE_AUTO) || focusMode.equals(Camera.Parameters.FOCUS_MODE_MACRO))
+        {
+            mCamera.autoFocus(new Camera.AutoFocusCallback()
+            {
+                @Override
+                public void onAutoFocus(boolean success, Camera camera)
+                {
+                    mCamera.takePicture(null,null,null,mPicture);
+                }
+            });
+        }
+        else
+            mCamera.takePicture(null,null,null,mPicture);
     }
+
+
+
+
+        //mCamera.takePicture(null,null,null,mPicture);
+
+
+
 
     @Override
     public void onPause(){
@@ -160,6 +179,8 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
 
         }
+
+
             };
 
 

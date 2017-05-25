@@ -35,6 +35,8 @@ import com.apptakk.http_request.HttpRequest;
 import com.apptakk.http_request.HttpRequestTask;
 import com.apptakk.http_request.HttpResponse;
 
+import org.json.JSONException;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -336,7 +338,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
-
+            InputStream inputStream = null;
+            String result = "";
             HttpURLConnection urlConnection=null;
             try{
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -349,15 +352,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 out.flush();
                 out.close();
 
-                /*InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while((line = reader.readLine()) != null) {
-                    result.append(line);
-                }*/
+                BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
 
-            }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
+                char[] buffer = new char[1024];
+
+                String jsonString = new String();
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line+"\n");
+                }
+                br.close();
+
+                jsonString = sb.toString();
+
+//TODO: catch JSONException
+
+
+        }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
                 Log.d("Ninjabook","httprequest");
             }
 
@@ -384,7 +397,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }*/
 
             // TODO: register the new account here.
-            return false;
+            return true;
         }
 
         @Override
