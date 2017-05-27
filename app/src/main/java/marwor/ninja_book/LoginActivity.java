@@ -19,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.JsonReader;
+import android.util.JsonWriter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,25 +38,30 @@ import com.apptakk.http_request.HttpRequestTask;
 import com.apptakk.http_request.HttpResponse;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.R.attr.name;
 
 /**
  * A login screen that offers login via email/password.
@@ -79,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+     static String token;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -221,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 2;
     }
 
     /**
@@ -334,57 +342,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             URL url=null;
             String stringToSend;
             try{
-                url = new URL("http://192.168.0.29:8080/api/users");
+                url = new URL("http://192.168.1.55:8080/api/auth");
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
+
             InputStream inputStream = null;
             String result = "";
             HttpURLConnection urlConnection=null;
             try{
+
                 urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
+               urlConnection.setDoOutput(true);
                 urlConnection.setRequestMethod("POST");
-                urlConnection.addRequestProperty("email",mEmail);
-                urlConnection.addRequestProperty("password",mPassword);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.setChunkedStreamingMode(0);
-                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("email",mEmail);
+                jsonObject.put("password",mPassword);
+
+                DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
+                out.writeBytes(jsonObject.toString());
                 out.flush();
                 out.close();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+                reader.beginObject();
+                String name = reader.nextName();
 
-                BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
-
-                char[] buffer = new char[1024];
-
-                String jsonString = new String();
-
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    sb.append(line+"\n");
+                if (name.equals("token")) {
+                    token = reader.nextString();
                 }
-                br.close();
-
-                jsonString = sb.toString();
-
-//TODO: catch JSONException
 
 
-        }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
+
+
+//TODO: catch JSONException*/
+
+
+
+        }catch(IOException|JSONException|IllegalStateException|SecurityException|NullPointerException e){
                 Log.d("Ninjabook","httprequest");
-            }
-
-            finally {
+            }finally {
                 if(urlConnection!=null){
                     urlConnection.disconnect();
 
                 }
             }
-
-
-
-
-
 
 
 
@@ -397,7 +401,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }*/
 
             // TODO: register the new account here.
-            return true;
+            return false;
         }
 
         @Override
