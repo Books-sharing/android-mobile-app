@@ -377,6 +377,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
+
 //TODO: catch JSONException*/
 
 
@@ -386,7 +387,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }finally {
                 if(urlConnection!=null){
                     urlConnection.disconnect();
+                     }
+            }
+            try{
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setChunkedStreamingMode(0);
+                JSONObject jsonToken = new JSONObject();
+                jsonToken.put("token",token);
 
+                DataOutputStream outToken = new DataOutputStream(urlConnection.getOutputStream());
+                outToken.writeBytes(jsonToken.toString());
+                outToken.flush();
+                outToken.close();
+            }catch(IOException|JSONException|IllegalStateException|SecurityException|NullPointerException e){
+                Log.d("Ninjabook","httprequest");
+            }finally {
+                if(urlConnection!=null){
+                    urlConnection.disconnect();
                 }
             }
 
