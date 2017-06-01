@@ -33,10 +33,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.apptakk.http_request.HttpRequest;
-import com.apptakk.http_request.HttpRequestTask;
-import com.apptakk.http_request.HttpResponse;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -339,34 +340,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            URL url=null;
+            URL urlToAuth=null;
             String stringToSend;
             try{
-                url = new URL("http://192.168.1.55:8080/api/auth");
+                urlToAuth = new URL("http://192.168.0.29:8080/api/auth");
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
 
-            InputStream inputStream = null;
-            String result = "";
-            HttpURLConnection urlConnection=null;
+
+            HttpURLConnection urlConnectionToAuth=null;
             try{
 
-                urlConnection = (HttpURLConnection) url.openConnection();
-               urlConnection.setDoOutput(true);
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setChunkedStreamingMode(0);
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("email",mEmail);
-                jsonObject.put("password",mPassword);
+                urlConnectionToAuth = (HttpURLConnection) urlToAuth.openConnection();
+               urlConnectionToAuth.setDoOutput(true);
+                urlConnectionToAuth.setRequestMethod("POST");
+                urlConnectionToAuth.setRequestProperty("Content-Type", "application/json");
+                urlConnectionToAuth.setChunkedStreamingMode(0);
 
-                DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
-                out.writeBytes(jsonObject.toString());
-                out.flush();
-                out.close();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+                JSONObject userAuthData = new JSONObject();
+                userAuthData.put("email",mEmail);
+                userAuthData.put("password",mPassword);
+
+                DataOutputStream outAuthData = new DataOutputStream(urlConnectionToAuth.getOutputStream());
+                outAuthData.writeBytes(userAuthData.toString());
+                outAuthData.flush();
+                outAuthData.close();
+                InputStream tokenInputStream = new BufferedInputStream(urlConnectionToAuth.getInputStream());
+                JsonReader reader = new JsonReader(new InputStreamReader(tokenInputStream, "UTF-8"));
                 reader.beginObject();
                 String name = reader.nextName();
 
@@ -374,50 +375,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     token = reader.nextString();
                 }
 
-
-
-
-
-//TODO: catch JSONException*/
-
-
-
         }catch(IOException|JSONException|IllegalStateException|SecurityException|NullPointerException e){
                 Log.d("Ninjabook","httprequest");
             }finally {
-                if(urlConnection!=null){
-                    urlConnection.disconnect();
+                if(urlConnectionToAuth!=null){
+                    urlConnectionToAuth.disconnect();
                      }
             }
-            try{
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setChunkedStreamingMode(0);
-                JSONObject jsonToken = new JSONObject();
-                jsonToken.put("token",token);
 
-                DataOutputStream outToken = new DataOutputStream(urlConnection.getOutputStream());
-                outToken.writeBytes(jsonToken.toString());
-                outToken.flush();
-                outToken.close();
-            }catch(IOException|JSONException|IllegalStateException|SecurityException|NullPointerException e){
+
+            URL urlToUsers=null;
+            HttpURLConnection urlConnectionToUsers=null;
+            try{
+                urlToUsers = new URL("http://192.168.0.29:8080/api/users");
+            }catch(MalformedURLException e){
+                Log.d("Nnjabook","urlconnection");
+            }
+
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpGet tokenGetRequest=new HttpGet("http://192.168.0.29:8080/api/users");
+                tokenGetRequest.addHeader("Authorization","Bearer "+token);
+                HttpResponse httpResponse = client.execute(tokenGetRequest);
+
+
+
+            }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
                 Log.d("Ninjabook","httprequest");
             }finally {
-                if(urlConnection!=null){
-                    urlConnection.disconnect();
+                if(urlConnectionToUsers!=null){
+                    urlConnectionToUsers.disconnect();
                 }
             }
 
 
 
-            /*for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }*/
+
 
             // TODO: register the new account here.
             return false;
