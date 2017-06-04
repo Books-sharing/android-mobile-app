@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.JsonReader;
-import android.util.JsonWriter;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,13 +31,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 
-import org.apache.http.impl.client.DefaultHttpClient;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,15 +44,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.SocketTimeoutException;
+
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +80,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-     static String token;
+    static String token=null;
+    static Long userId=null;
+    static String userFirstName;
+    static String userLastName;
+    static String userEmail;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -385,34 +382,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
             URL urlToUsers=null;
-            HttpURLConnection urlConnectionToUsers=null;
+
             try{
+
                 urlToUsers = new URL("http://192.168.0.29:8080/api/users");
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
 
             try{
-                HttpClient client = new DefaultHttpClient();
-                HttpGet tokenGetRequest=new HttpGet("http://192.168.0.29:8080/api/users");
-                tokenGetRequest.addHeader("Authorization","Bearer "+token);
-                HttpResponse httpResponse = client.execute(tokenGetRequest);
 
+                HttpURLConnection urlConnectionToUsers = null;
+
+
+                urlConnectionToUsers = (HttpURLConnection) urlToUsers.openConnection();
+                urlConnectionToUsers.setRequestMethod("GET");
+                urlConnectionToUsers.setRequestProperty("Authorization","Bearer "+token);
+
+
+
+
+                //InputStream userDataInputStream = new BufferedInputStream(urlConnectionToUsers.getInputStream());
+                InputStream userDataInputStream = urlConnectionToUsers.getInputStream();
+                JsonReader reader = new JsonReader(new InputStreamReader(userDataInputStream, "UTF-8"));
+                reader.beginObject();
+                while(reader.hasNext()){
+                    String name = reader.nextName();
+                    if (name.equals("id")) {
+                        userId = reader.nextLong();
+                    }
+                    if (name.equals("firstname")) {
+                        userFirstName = reader.nextString();
+                    }
+                    if (name.equals("lastname")) {
+                        userLastName = reader.nextString();
+                    }if (name.equals("email")) {
+                        userEmail = reader.nextString();
+                    }
+
+                }
 
 
             }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
-                Log.d("Ninjabook","httprequest");
-            }finally {
-                if(urlConnectionToUsers!=null){
-                    urlConnectionToUsers.disconnect();
-                }
+                Log.d("Ninjabook","httprequest"+e.getMessage());
+            }
+
+
+
+            if(userId !=null&&token!=null){
+                return true;
             }
 
 
 
 
 
-            // TODO: register the new account here.
+
             return false;
         }
 
