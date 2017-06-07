@@ -1,5 +1,7 @@
 package marwor.ninja_book;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -16,8 +18,9 @@ public class ShowQueue extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_queue);
+        SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
         list=new ArrayList<>();
-        list.add(new ShowQueueData("AMAMAMAM",4));
+        list.add(new ShowQueueData(sharedPref.getString("userFirstName","error"),4));
         list.add(new ShowQueueData("ewrwer",5));
         list.add(new ShowQueueData("Avcxzvc",1));
         list.add(new ShowQueueData("gjsdfhgkjsdhkj",10));

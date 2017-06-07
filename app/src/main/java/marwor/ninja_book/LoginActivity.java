@@ -3,6 +3,9 @@ package marwor.ninja_book;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -61,6 +64,8 @@ import static android.R.attr.name;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    String token=null;
+
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -80,11 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    static String token=null;
-    static Long userId=null;
-    static String userFirstName;
-    static String userLastName;
-    static String userEmail;
+
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -336,59 +337,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            HttpRequests httpRequests=new HttpRequests();
             URL urlToAuth=null;
-            String stringToSend;
+            URL urlToUsers=null;
+            String token=null;
+            Long userId=null;
+            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            JsonReader userDataReader=null;
+
             try{
                 urlToAuth = new URL("http://192.168.0.29:8080/api/auth");
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
-
-
-            HttpURLConnection urlConnectionToAuth=null;
-            try{
-
-                urlConnectionToAuth = (HttpURLConnection) urlToAuth.openConnection();
-               urlConnectionToAuth.setDoOutput(true);
-                urlConnectionToAuth.setRequestMethod("POST");
-                urlConnectionToAuth.setRequestProperty("Content-Type", "application/json");
-                urlConnectionToAuth.setChunkedStreamingMode(0);
-
-                JSONObject userAuthData = new JSONObject();
-                userAuthData.put("email",mEmail);
-                userAuthData.put("password",mPassword);
-
-                DataOutputStream outAuthData = new DataOutputStream(urlConnectionToAuth.getOutputStream());
-                outAuthData.writeBytes(userAuthData.toString());
-                outAuthData.flush();
-                outAuthData.close();
-                InputStream tokenInputStream = new BufferedInputStream(urlConnectionToAuth.getInputStream());
-                JsonReader reader = new JsonReader(new InputStreamReader(tokenInputStream, "UTF-8"));
-                reader.beginObject();
-                String name = reader.nextName();
-
-                if (name.equals("token")) {
-                    token = reader.nextString();
-                }
-
-        }catch(IOException|JSONException|IllegalStateException|SecurityException|NullPointerException e){
-                Log.d("Ninjabook","httprequest");
-            }finally {
-                if(urlConnectionToAuth!=null){
-                    urlConnectionToAuth.disconnect();
-                     }
-            }
-
-
-            URL urlToUsers=null;
-
             try{
 
                 urlToUsers = new URL("http://192.168.0.29:8080/api/users");
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
+            token=httpRequests.AuthenticationPostRequest(urlToAuth,mEmail,mPassword);
+            editor.putString("token", token);
+            editor.commit();
+
+
 
             try{
 
@@ -402,22 +375,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
-                //InputStream userDataInputStream = new BufferedInputStream(urlConnectionToUsers.getInputStream());
+
                 InputStream userDataInputStream = urlConnectionToUsers.getInputStream();
                 JsonReader reader = new JsonReader(new InputStreamReader(userDataInputStream, "UTF-8"));
                 reader.beginObject();
                 while(reader.hasNext()){
                     String name = reader.nextName();
                     if (name.equals("id")) {
-                        userId = reader.nextLong();
+                        editor.putLong("userId", reader.nextLong());
+                        editor.commit();
                     }
-                    if (name.equals("firstname")) {
-                        userFirstName = reader.nextString();
+                    if (name.equals("firstName")) {
+                        editor.putString("userFirstName", reader.nextString());
+                        editor.commit();
                     }
-                    if (name.equals("lastname")) {
-                        userLastName = reader.nextString();
-                    }if (name.equals("email")) {
-                        userEmail = reader.nextString();
+                    if (name.equals("lastName")) {
+                        editor.putString("userLastName", reader.nextString());
+                        editor.commit();
+                    }
+                    if (name.equals("email")) {
+                        editor.putString("userEmail", reader.nextString());
+                        editor.commit();
                     }
 
                 }
@@ -426,18 +404,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
                 Log.d("Ninjabook","httprequest"+e.getMessage());
             }
+            userId=sharedPref.getLong("userId",0);
 
 
 
-            if(userId !=null&&token!=null){
+            if(userId!=null&&userId!=0&&token!=null){
                 return true;
             }
-
-
-
-
-
-
             return false;
         }
 
