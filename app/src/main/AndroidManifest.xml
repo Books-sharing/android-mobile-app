@@ -33,11 +33,11 @@
         <activity android:name=".AddComment" />
         <activity android:name=".ReturnBook" />
         <activity android:name=".SearchBook" />
-        <activity android:name=".ShowQueue" />
-        <activity android:name=".CameraActivity" />
-        <activity android:name=".LoadingActivity" />
+        <activity android:name=".ShowQueue.ShowQueue" />
+        <activity android:name=".Camera.CameraActivity" />
+        <activity android:name=".ShowQueue.LoadingActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Login.LoginActivity"
             android:label="@string/title_activity_login"></activity>
     </application>
 

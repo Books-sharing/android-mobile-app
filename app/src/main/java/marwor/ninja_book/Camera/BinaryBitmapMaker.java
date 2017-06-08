@@ -1,19 +1,12 @@
-package marwor.ninja_book;
+package marwor.ninja_book.Camera;
 
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
-import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-
-
 
 
 public class BinaryBitmapMaker {

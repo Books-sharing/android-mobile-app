@@ -1,13 +1,9 @@
-package marwor.ninja_book;
+package marwor.ninja_book.Login;
 
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Created by Marcin_stacjonarny on 2017-06-07.

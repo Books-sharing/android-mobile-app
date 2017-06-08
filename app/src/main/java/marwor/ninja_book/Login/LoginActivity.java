@@ -1,10 +1,9 @@
-package marwor.ninja_book;
+package marwor.ninja_book.Login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -36,14 +35,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -57,8 +48,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import marwor.ninja_book.R;
+
 import static android.Manifest.permission.READ_CONTACTS;
-import static android.R.attr.name;
+import static marwor.ninja_book.MainActivity.contextOfAplication;
 
 /**
  * A login screen that offers login via email/password.
@@ -342,73 +335,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             URL urlToUsers=null;
             String token=null;
             Long userId=null;
-            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
+           SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             JsonReader userDataReader=null;
 
             try{
-                urlToAuth = new URL("http://192.168.0.29:8080/api/auth");
+                urlToAuth = new URL("http://192.168.1.64:8080/api/auth");
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
             try{
 
-                urlToUsers = new URL("http://192.168.0.29:8080/api/users");
+                urlToUsers = new URL("http://192.168.1.64:8080/api/users");
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
-            token=httpRequests.AuthenticationPostRequest(urlToAuth,mEmail,mPassword);
-            editor.putString("token", token);
-            editor.commit();
+            httpRequests.AuthenticationPostRequest(urlToAuth,mEmail,mPassword,contextOfAplication);
+            httpRequests.AutenticationGetRequest(urlToUsers,sharedPref.getString("token","error"),contextOfAplication);
 
-
-
-            try{
-
-                HttpURLConnection urlConnectionToUsers = null;
-
-
-                urlConnectionToUsers = (HttpURLConnection) urlToUsers.openConnection();
-                urlConnectionToUsers.setRequestMethod("GET");
-                urlConnectionToUsers.setRequestProperty("Authorization","Bearer "+token);
-
-
-
-
-
-                InputStream userDataInputStream = urlConnectionToUsers.getInputStream();
-                JsonReader reader = new JsonReader(new InputStreamReader(userDataInputStream, "UTF-8"));
-                reader.beginObject();
-                while(reader.hasNext()){
-                    String name = reader.nextName();
-                    if (name.equals("id")) {
-                        editor.putLong("userId", reader.nextLong());
-                        editor.commit();
-                    }
-                    if (name.equals("firstName")) {
-                        editor.putString("userFirstName", reader.nextString());
-                        editor.commit();
-                    }
-                    if (name.equals("lastName")) {
-                        editor.putString("userLastName", reader.nextString());
-                        editor.commit();
-                    }
-                    if (name.equals("email")) {
-                        editor.putString("userEmail", reader.nextString());
-                        editor.commit();
-                    }
-
-                }
-
-
-            }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
-                Log.d("Ninjabook","httprequest"+e.getMessage());
-            }
-            userId=sharedPref.getLong("userId",0);
-
-
-
-            if(userId!=null&&userId!=0&&token!=null){
+          userId=sharedPref.getLong("userId",0);
+            token=sharedPref.getString("token","error");
+            if(userId!=0&&token!=null){
                 return true;
             }
             return false;

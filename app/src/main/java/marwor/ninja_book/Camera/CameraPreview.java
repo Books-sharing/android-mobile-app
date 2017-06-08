@@ -1,4 +1,4 @@
-package marwor.ninja_book;
+package marwor.ninja_book.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.content.Context;

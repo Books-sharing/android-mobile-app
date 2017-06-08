@@ -1,9 +1,11 @@
-package marwor.ninja_book;
+package marwor.ninja_book.ShowQueue;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import marwor.ninja_book.R;
 
 public class LoadingActivity extends AppCompatActivity {
     private TextView QRText;

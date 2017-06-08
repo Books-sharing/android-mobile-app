@@ -1,14 +1,14 @@
-package marwor.ninja_book;
+package marwor.ninja_book.ShowQueue;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import marwor.ninja_book.R;
 
 public class ShowQueue extends AppCompatActivity {
     private ArrayList<ShowQueueData> list;

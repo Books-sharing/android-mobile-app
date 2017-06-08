@@ -1,14 +1,19 @@
 package marwor.ninja_book;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import marwor.ninja_book.Camera.CameraActivity;
+import marwor.ninja_book.Login.LoginActivity;
+import marwor.ninja_book.ShowQueue.ShowQueue;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
-
+    public static Context contextOfAplication;
     private Button buttonBorrow;
     private Button buttonReturn;
     private Button buttonQueue;
@@ -20,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+       contextOfAplication=getApplicationContext();
         if(IsUserLogin==false){
             Intent startLoggingActivity=new Intent(this,LoginActivity.class);
             startActivity(startLoggingActivity);

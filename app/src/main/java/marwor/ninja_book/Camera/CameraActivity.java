@@ -1,4 +1,4 @@
-package marwor.ninja_book;
+package marwor.ninja_book.Camera;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,31 +15,22 @@ import android.widget.FrameLayout;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.EncodeHintType;
 import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.qrcode.QRCodeReader;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
+
+import marwor.ninja_book.ShowQueue.LoadingActivity;
+import marwor.ninja_book.R;
 
 import static android.content.ContentValues.TAG;
-import static android.graphics.Bitmap.Config.ARGB_8888;
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-import static com.google.zxing.BarcodeFormat.QR_CODE;
 
 public class CameraActivity extends Activity implements View.OnClickListener {
     private static final int MEDIA_TYPE_IMAGE = 1;

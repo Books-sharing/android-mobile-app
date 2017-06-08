@@ -1,8 +1,5 @@
-package marwor.ninja_book;
-import android.content.Context;
+package marwor.ninja_book.Camera;
 import android.hardware.Camera;
-
-import java.lang.Object;
 
 
 public class CameraOpen {

@@ -1,4 +1,4 @@
-package marwor.ninja_book;
+package marwor.ninja_book.ShowQueue;
 
 
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import marwor.ninja_book.R;
 
 public class ListAdapter extends ArrayAdapter<ShowQueueData> {
     private Context context;

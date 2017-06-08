@@ -1,4 +1,4 @@
-package marwor.ninja_book;
+package marwor.ninja_book.ShowQueue;
 
 
 public class ShowQueueData {
