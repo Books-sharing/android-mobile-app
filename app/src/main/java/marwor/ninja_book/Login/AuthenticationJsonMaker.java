@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * Created by Marcin_stacjonarny on 2017-06-07.
  */
 
-public class JsonMaker {
+public class AuthenticationJsonMaker {
 
     public JSONObject AuthenticationJson(String email, String password) {
 
@@ -23,4 +23,6 @@ public class JsonMaker {
         }
         return userAuthData;
     }
+
+
 }

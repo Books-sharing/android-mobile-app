@@ -35,11 +35,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
 import java.net.URL;
@@ -330,7 +325,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            HttpRequests httpRequests=new HttpRequests();
+            AuthenticationHttpRequests httpRequests=new AuthenticationHttpRequests();
             URL urlToAuth=null;
             URL urlToUsers=null;
             String token=null;
@@ -340,13 +335,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JsonReader userDataReader=null;
 
             try{
-                urlToAuth = new URL("http://192.168.1.64:8080/api/auth");
+                urlToAuth = new URL("http://192.168.1.65:8080/api/auth");
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
             try{
 
-                urlToUsers = new URL("http://192.168.1.64:8080/api/users");
+                urlToUsers = new URL("http://192.168.1.65:8080/api/users");
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }

@@ -1,6 +1,5 @@
 package marwor.ninja_book.Login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.JsonReader;
@@ -20,14 +19,15 @@ import java.net.URL;
  * Created by Marcin_stacjonarny on 2017-06-07.
  */
 
-public class HttpRequests {
+public class AuthenticationHttpRequests {
     /*AuthenticationPostRequest funtion conect with serwer, sending user email and password in json. If email and password is correct, serwer send to app jwtk token */
     public void AuthenticationPostRequest(URL url, String mail, String password,Context context){
         HttpURLConnection urlConnectionToAuth=null;
         String token=null;
-        JsonMaker jsonMaker=new JsonMaker();
+        AuthenticationJsonMaker jsonMaker=new AuthenticationJsonMaker();
         SharedPreferences sharedPref = context.getSharedPreferences("UserData", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        AuthenticationJsonReader authenticationJsonReader=new AuthenticationJsonReader();
         try{
             urlConnectionToAuth = (HttpURLConnection) url.openConnection();
             urlConnectionToAuth.setDoOutput(true);
@@ -43,13 +43,7 @@ public class HttpRequests {
             outAuthData.close();
             InputStream tokenInputStream = new BufferedInputStream(urlConnectionToAuth.getInputStream());
             JsonReader reader = new JsonReader(new InputStreamReader(tokenInputStream, "UTF-8"));
-            reader.beginObject();
-            String name = reader.nextName();
-
-            if (name.equals("token")) {
-                token = reader.nextString();
-            }
-
+            authenticationJsonReader.ReadTokenJson(reader,context);
 
         }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
             Log.d("Ninjabook","httpPostRequest");
@@ -57,8 +51,6 @@ public class HttpRequests {
             if(urlConnectionToAuth!=null){
                 urlConnectionToAuth.disconnect();
             }
-            editor.putString("token", token);
-            editor.commit();
         }
 
     }
@@ -66,6 +58,7 @@ public void AutenticationGetRequest(URL url,String token,Context context){
     HttpURLConnection urlConnectionToUsers = null;
     SharedPreferences sharedPref = context.getSharedPreferences("UserData", context.MODE_PRIVATE);
     SharedPreferences.Editor editor = sharedPref.edit();
+    AuthenticationJsonReader authenticationJsonReader=new AuthenticationJsonReader();
     try{
         urlConnectionToUsers = (HttpURLConnection) url.openConnection();
         urlConnectionToUsers.setRequestMethod("GET");
@@ -73,27 +66,8 @@ public void AutenticationGetRequest(URL url,String token,Context context){
 
         InputStream userDataInputStream = urlConnectionToUsers.getInputStream();
         JsonReader reader = new JsonReader(new InputStreamReader(userDataInputStream, "UTF-8"));
-        reader.beginObject();
-        while(reader.hasNext()){
-            String name = reader.nextName();
-            if (name.equals("id")) {
-                editor.putLong("userId", reader.nextLong());
-                editor.commit();
-            }
-            if (name.equals("firstName")) {
-                editor.putString("userFirstName", reader.nextString());
-                editor.commit();
-            }
-            if (name.equals("lastName")) {
-                editor.putString("userLastName", reader.nextString());
-                editor.commit();
-            }
-            if (name.equals("email")) {
-                editor.putString("userEmail", reader.nextString());
-                editor.commit();
-            }
+        authenticationJsonReader.ReadUserDataJson(reader,context);
 
-        }
 
 
     }catch(IOException|IllegalStateException|SecurityException|NullPointerException e){
@@ -106,4 +80,5 @@ public void AutenticationGetRequest(URL url,String token,Context context){
 }
 
 }
+
 }
