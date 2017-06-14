@@ -335,13 +335,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JsonReader userDataReader=null;
 
             try{
-                urlToAuth = new URL("http://192.168.1.65:8080/api/auth");
+                urlToAuth = new URL("http://192.168.0.29:8080/api/auth");
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
             try{
 
-                urlToUsers = new URL("http://192.168.1.65:8080/api/users");
+                urlToUsers = new URL("http://192.168.0.29:8080/api/users");
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }

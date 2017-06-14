@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import marwor.ninja_book.R;
 
 public class ShowQueue extends AppCompatActivity {
-    private ArrayList<ShowQueueData> list;
+    private ArrayList<DbBookClass> list;
     private ListView ShowQueueList;
     private ListAdapter adapter;
     GetingQueueDataTask getingQueueDataTask=null;
@@ -23,18 +23,15 @@ public class ShowQueue extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_queue);
+        list=new ArrayList<>();
+        ShowQueueList = (ListView)findViewById(R.id.ShowQueueList);
 
-
-
-
-
-        /*list=new ArrayList<>();
-        list.add(new ShowQueueData(sharedPref.getString("userFirstName","error"),4));
+        /* list.add(new ShowQueueData(sharedPref.getString("userFirstName","error"),4));
         list.add(new ShowQueueData("ewrwer",5));
         list.add(new ShowQueueData("Avcxzvc",1));
         list.add(new ShowQueueData("gjsdfhgkjsdhkj",10));
 
-        ShowQueueList = (ListView)findViewById(R.id.ShowQueueList);
+
         adapter = new ListAdapter(list,getApplicationContext());
         ShowQueueList.setAdapter(adapter);*/
 
@@ -58,7 +55,7 @@ public class ShowQueue extends AppCompatActivity {
             URL urlToNotification=null;
 
             try{
-                urlToNotification = new URL("http://192.168.1.65:8080/api/notification/" + sharedPref.getLong("userId", 0));
+                urlToNotification = new URL("http://192.168.0.29:8080/api/notification/" + sharedPref.getLong("userId", 0));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }

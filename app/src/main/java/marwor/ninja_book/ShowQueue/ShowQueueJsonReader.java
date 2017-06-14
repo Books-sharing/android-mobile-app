@@ -4,6 +4,7 @@ import android.util.JsonReader;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class ShowQueueJsonReader {
     public List<DbBookClass> QueueJsonReader(JsonReader reader) {
-        List<DbBookClass> queueList=null;
+        List<DbBookClass> queueList=new ArrayList<DbBookClass>();
         try {
             reader.beginObject();
             while (reader.hasNext()) {

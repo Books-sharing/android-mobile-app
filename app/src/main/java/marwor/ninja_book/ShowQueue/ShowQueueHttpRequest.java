@@ -19,10 +19,10 @@ import java.util.List;
  */
 
 public class ShowQueueHttpRequest {
-    //public ArrayList<ShowQueueData> ShowQueueGetRequest(URL url){
-      public void ShowQueueGetRequest(URL url){
+    public List<DbBookClass> ShowQueueGetRequest(URL url){
+      //public void ShowQueueGetRequest(URL url){
           HttpURLConnection urlConnectionToUsers = null;
-          List <DbBookClass> queueList;
+          List <DbBookClass> queueList=new ArrayList<>();
           ShowQueueJsonReader showQueueJsonReader=new ShowQueueJsonReader();
 
         try{
@@ -30,29 +30,12 @@ public class ShowQueueHttpRequest {
             urlConnectionToUsers.setRequestMethod("GET");
             InputStream userDataInputStream = urlConnectionToUsers.getInputStream();
             JsonReader reader = new JsonReader(new InputStreamReader(userDataInputStream, "UTF-8"));
-            showQueueJsonReader.QueueJsonReader(reader);
-
-
-            /*reader.beginObject();
-            while(reader.hasNext()){
-                String name = reader.nextName();
-                if(name.equals("Queues list")){
-                    reader.beginArray();
-                    while(reader.hasNext()){
-                      queueList.add(readMessage(reader));
-
-
-
-                        }
-                    }
-                }
-
-            }
-*/
+            queueList=showQueueJsonReader.QueueJsonReader(reader);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return queueList;
       }
 
 }
