@@ -38,7 +38,8 @@
         <activity android:name=".ShowQueue.LoadingActivity" />
         <activity
             android:name=".Login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name=".MyBooks.MyBooks"></activity>
     </application>
 
 </manifest>

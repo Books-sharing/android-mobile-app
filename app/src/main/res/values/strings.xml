@@ -6,6 +6,7 @@
     <string name="moje_kolejki">Moje miejsce w kolejkach</string>
     <string name="szukaj_ksiazki">Szukaj książki</string>
     <string name="komentarz">Dodaj komentarz</string>
+    <string name="wypozyczone_ksiazki">Wypożyczone książki</string>
     <string name="TakePicture">Skanuj kod QR</string>
     <string name="title_activity_loading">LoadingActivity</string>
     <string name="title_activity_login">Sign in</string>

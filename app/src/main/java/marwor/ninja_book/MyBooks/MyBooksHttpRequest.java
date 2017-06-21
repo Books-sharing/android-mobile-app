@@ -1,4 +1,4 @@
-package marwor.ninja_book.ShowQueue;
+package marwor.ninja_book.MyBooks;
 
 import android.util.JsonReader;
 
@@ -9,30 +9,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import marwor.ninja_book.ShowQueue.QueueBookClass;
+import marwor.ninja_book.ShowQueue.ShowQueueJsonReader;
+
 /**
- * Created by HP on 2017-06-09.
+ * Created by Marcin_stacjonarny on 2017-06-20.
  */
 
-public class ShowQueueHttpRequest {
-    public ArrayList<QueueBookClass> ShowQueueGetRequest(URL url){
-      //public void ShowQueueGetRequest(URL url){
-          HttpURLConnection urlConnectionToUsers = null;
-          ArrayList <QueueBookClass> queueList=new ArrayList<>();
-          ShowQueueJsonReader showQueueJsonReader=new ShowQueueJsonReader();
+public class MyBooksHttpRequest {
+    public ArrayList<MyBooksBookClass> MyBooksGetRequest(URL url){
+
+        HttpURLConnection urlConnectionToUsers = null;
+        ArrayList <MyBooksBookClass> myBooksList=new ArrayList<>();
+        MyBooksJsonReader myBooksJsonReader=new MyBooksJsonReader();
 
         try{
             urlConnectionToUsers = (HttpURLConnection) url.openConnection();
             urlConnectionToUsers.setRequestMethod("GET");
             InputStream userDataInputStream = urlConnectionToUsers.getInputStream();
             JsonReader reader = new JsonReader(new InputStreamReader(userDataInputStream, "UTF-8"));
-            queueList=showQueueJsonReader.QueueJsonReader(reader);
+            myBooksList=myBooksJsonReader.BookListJsonReader(reader);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return queueList;
-      }
-
+        return myBooksList;
 }
-
-
+}

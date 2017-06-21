@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.Login.LoginActivity;
+import marwor.ninja_book.MyBooks.MyBooks;
 import marwor.ninja_book.ShowQueue.ShowQueue;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonQueue;
     private Button buttonSearch;
     private Button buttonComment;
+    private Button buttonMyBooks;
     private Intent clickToAction;
     private static boolean IsUserLogin=false;
     @Override
@@ -35,12 +37,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonQueue=(Button) findViewById(R.id.queue);
         buttonSearch=(Button) findViewById(R.id.searchBook);
         buttonComment=(Button) findViewById(R.id.comment);
-
+        buttonMyBooks=(Button) findViewById(R.id.myBooks);
         buttonBorrow.setOnClickListener(this);
         buttonReturn.setOnClickListener(this);
         buttonQueue.setOnClickListener(this);
         buttonSearch.setOnClickListener(this);
         buttonComment.setOnClickListener(this);
+        buttonMyBooks.setOnClickListener(this);
 
     }
 
@@ -64,10 +67,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clickToAction= new Intent(this, SearchBook.class);
                 startActivity(clickToAction);
                 break;
+            case R.id.myBooks:
+                clickToAction= new Intent(this, MyBooks.class);
+                startActivity(clickToAction);
+                break;
             case R.id.comment:
                 clickToAction= new Intent(this, AddComment.class);
                 startActivity(clickToAction);
-
                 break;
 
             default:

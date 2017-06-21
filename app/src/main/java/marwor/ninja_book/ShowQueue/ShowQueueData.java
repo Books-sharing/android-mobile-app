@@ -8,7 +8,7 @@ public class ShowQueueData {
 
     public ShowQueueData(String title,int placeInQueue){
         this.title=title;
-        this.inscription="Twoje miejsce w kolejce ";
+
         this.placeInQueue=Integer.toString(placeInQueue);
 
     }

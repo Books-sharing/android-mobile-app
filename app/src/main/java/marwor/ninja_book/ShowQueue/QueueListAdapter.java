@@ -14,19 +14,21 @@ import java.util.ArrayList;
 
 import marwor.ninja_book.R;
 
-public class ListAdapter extends ArrayAdapter<ShowQueueData> {
+public class QueueListAdapter extends ArrayAdapter<QueueBookClass> {
     private Context context;
+    private String inscription;
     private static LayoutInflater inflater=null;
-    private ArrayList<ShowQueueData> data;
+    private ArrayList<QueueBookClass> data;
     private static class Holder{
         TextView title;
         TextView place;
     }
 
 
-    public  ListAdapter(ArrayList<ShowQueueData> data, Context context) {
+    public QueueListAdapter(ArrayList<QueueBookClass> data, Context context) {
         super(context, R.layout.show_queue_list_element, data);
         this.data=data;
+        inscription="Twoje miejsce w kolejce:  ";
         context= context;
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -39,8 +41,8 @@ public class ListAdapter extends ArrayAdapter<ShowQueueData> {
         rowView = inflater.inflate(R.layout.show_queue_list_element, null);
         viewHolder.title=(TextView) rowView.findViewById(R.id.bookTitleTextView);
         viewHolder.place=(TextView) rowView.findViewById(R.id.inscription);
-        viewHolder.title.setText(data.get(position).setTitle());
-        viewHolder.place.setText(data.get(position).setPlace());
+        viewHolder.title.setText(data.get(position).getBookTitle());
+        viewHolder.place.setText(inscription+data.get(position).getPlaceInQueue());
 
         return rowView;
     }

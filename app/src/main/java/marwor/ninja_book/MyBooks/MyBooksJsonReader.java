@@ -1,25 +1,27 @@
-package marwor.ninja_book.ShowQueue;
+package marwor.ninja_book.MyBooks;
 
 import android.util.JsonReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import marwor.ninja_book.ShowQueue.QueueBookClass;
+
 /**
- * Created by HP on 2017-06-11.
+ * Created by Marcin_stacjonarny on 2017-06-20.
  */
 
-public class ShowQueueJsonReader {
-    public ArrayList<QueueBookClass> QueueJsonReader(JsonReader reader) {
-        ArrayList<QueueBookClass> queueList=new ArrayList<QueueBookClass>();
+public class MyBooksJsonReader {
+    public ArrayList<MyBooksBookClass> BookListJsonReader(JsonReader reader) {
+        ArrayList<MyBooksBookClass> myBooksList=new ArrayList<MyBooksBookClass>();
         try {
             reader.beginObject();
             while (reader.hasNext()) {
                 String name = reader.nextName();
-                if (name.equals("Queues list")) {
+                if (name.equals("Books list")) {
                     reader.beginArray();
                     while (reader.hasNext()) {
-                        queueList.add(getBookforJson(reader));
+                        myBooksList.add(getBookforJson(reader));
                     }
                     reader.endArray();
                 }else{
@@ -31,29 +33,29 @@ public class ShowQueueJsonReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return queueList;
+        return myBooksList;
     }
-    private QueueBookClass getBookforJson(JsonReader reader){
-        String orderDate=null;
+    private MyBooksBookClass getBookforJson(JsonReader reader){
+        String borrowDate=null;
+        String returnDate=null;
         String title = null;
         String author = null;
         String isbn = null;
-        int place = -1;
         try {
             reader.beginObject();
             while (reader.hasNext()) {
                 String name = reader.nextName();
-                 if (name.equals("title")) {
+                if (name.equals("title")) {
                     title = reader.nextString();
                 } else if (name.equals("author")) {
                     author = reader.nextString();
                 } else if (name.equals("isbn")) {
                     isbn = reader.nextString();
-                } else if(name.equals("orderDate")) {
-                    orderDate=reader.nextString();
-                }else if(name.equals("positionInQueue")) {
-                     place=reader.nextInt();
-                 }
+                } else if(name.equals("borrowDate")) {
+                    borrowDate=reader.nextString();
+                }else if(name.equals("returnDate")) {
+                    returnDate=reader.nextString();
+                }
             }
 
             reader.endObject();
@@ -61,10 +63,9 @@ public class ShowQueueJsonReader {
             e.printStackTrace();
         }
 
-        return new QueueBookClass(title, author, isbn,orderDate,place);
+        return new MyBooksBookClass(title, author, isbn,borrowDate,returnDate);
 
 
     }
 
-    }
-
+}

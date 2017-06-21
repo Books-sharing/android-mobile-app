@@ -15,25 +15,21 @@ import java.util.ArrayList;
 import marwor.ninja_book.R;
 
 public class ShowQueue extends AppCompatActivity {
-    private ArrayList<DbBookClass> list;
+    private ArrayList<QueueBookClass> list;
     private ListView ShowQueueList;
-    private ListAdapter adapter;
+    private QueueListAdapter adapter;
     GetingQueueDataTask getingQueueDataTask=null;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_queue);
-        list=new ArrayList<>();
+        list=new ArrayList<QueueBookClass>();
         ShowQueueList = (ListView)findViewById(R.id.ShowQueueList);
 
-        /* list.add(new ShowQueueData(sharedPref.getString("userFirstName","error"),4));
-        list.add(new ShowQueueData("ewrwer",5));
-        list.add(new ShowQueueData("Avcxzvc",1));
-        list.add(new ShowQueueData("gjsdfhgkjsdhkj",10));
 
-
-        adapter = new ListAdapter(list,getApplicationContext());
-        ShowQueueList.setAdapter(adapter);*/
 
     }
 
@@ -43,26 +39,40 @@ public class ShowQueue extends AppCompatActivity {
         getingQueueDataTask=null;
         getingQueueDataTask=new GetingQueueDataTask();
         getingQueueDataTask.execute();
+        getingQueueDataTask.onPostExecute(list);
+
+
+
 
     }
+    public void setList(ArrayList<QueueBookClass> list) {
+        this.list = list;
+    }
 
-    public class GetingQueueDataTask extends AsyncTask<Void, Void, Boolean>{
+    public class GetingQueueDataTask extends AsyncTask<Void, Void, ArrayList<QueueBookClass>>{
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected ArrayList<QueueBookClass> doInBackground(Void... params) {
             SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
             ShowQueueHttpRequest showQueueHttpRequest=new ShowQueueHttpRequest();
             URL urlToNotification=null;
-
+            ArrayList<QueueBookClass> queueList=new ArrayList<>();
             try{
                 urlToNotification = new URL("http://192.168.0.29:8080/api/notification/" + sharedPref.getLong("userId", 0));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
-            showQueueHttpRequest.ShowQueueGetRequest(urlToNotification);
+            queueList=showQueueHttpRequest.ShowQueueGetRequest(urlToNotification);
 
 
-            return null;
+            return queueList;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<QueueBookClass> list) {
+            super.onPostExecute(list);
+            adapter = new QueueListAdapter(list,getApplicationContext());
+            ShowQueueList.setAdapter(adapter);
         }
     }
 }
