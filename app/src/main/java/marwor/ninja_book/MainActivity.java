@@ -1,7 +1,9 @@
 package marwor.ninja_book;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,14 +25,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonMyBooks;
     private Intent clickToAction;
     private static boolean IsUserLogin=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       contextOfAplication=getApplicationContext();
+        contextOfAplication=getApplicationContext();
+        SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
+
         if(IsUserLogin==false){
             Intent startLoggingActivity=new Intent(this,LoginActivity.class);
             startActivity(startLoggingActivity);
+        }
+        if(sharedPref.getLong("userId",-1)!=-1){
+            IsUserLogin=true;
         }
         buttonBorrow=(Button) findViewById(R.id.borrow);
         buttonReturn=(Button) findViewById(R.id.returnBook);

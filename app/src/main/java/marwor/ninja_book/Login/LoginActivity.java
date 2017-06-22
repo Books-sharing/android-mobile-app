@@ -329,7 +329,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             URL urlToAuth=null;
             URL urlToUsers=null;
             String token=null;
-            Long userId=null;
+            Long userId=-1L;
            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             JsonReader userDataReader=null;
@@ -348,9 +348,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             httpRequests.AuthenticationPostRequest(urlToAuth,mEmail,mPassword,contextOfAplication);
             httpRequests.AutenticationGetRequest(urlToUsers,sharedPref.getString("token","error"),contextOfAplication);
 
-          userId=sharedPref.getLong("userId",0);
+          userId=sharedPref.getLong("userId",-1);
             token=sharedPref.getString("token","error");
-            if(userId!=0&&token!=null){
+            if(userId!=-1&&token!=null){
                 return true;
             }
             return false;

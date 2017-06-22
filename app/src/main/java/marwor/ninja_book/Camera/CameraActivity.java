@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.ShowQueue.LoadingActivity;
 import marwor.ninja_book.R;
 
@@ -62,7 +63,18 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         mPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
+        Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
+        {
+            @Override
+            public void uncaughtException (Thread thread, Throwable e)
+            {
+                handleUncaughtException (thread, e);
+            }
+        });
     }
+
+
+
     @Override
     public void onClick(View v){
         String focusMode = mCamera.getParameters().getFocusMode();
@@ -160,7 +172,14 @@ public class CameraActivity extends Activity implements View.OnClickListener {
                 result=qrCodeReader.decode(binaryBitmap);
                 Log.d(TAG,"rezultat"+result.getText());
             }
-            catch (NotFoundException|ChecksumException|FormatException e) { e.printStackTrace(); }
+            catch (NotFoundException|ChecksumException|FormatException e) {
+                e.printStackTrace();
+                mCamera.release();
+                Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
+                startActivity (intent);
+                System.exit(1); // kill off the crashed app
+
+            }
 
             Intent i = new Intent(CameraActivity.this, LoadingActivity.class);
             i.putExtra("qrResult",result.getText());
@@ -172,6 +191,13 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
 
             };
+    private void handleUncaughtException (Thread thread, Throwable e)
+    {
+        mCamera.release();
+        Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
+        startActivity (intent);
+        System.exit(1); // kill off the crashed app
+    }
 
 
 
