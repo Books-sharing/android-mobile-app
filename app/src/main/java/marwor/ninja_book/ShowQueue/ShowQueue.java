@@ -45,9 +45,7 @@ public class ShowQueue extends AppCompatActivity {
 
 
     }
-    public void setList(ArrayList<QueueBookClass> list) {
-        this.list = list;
-    }
+
 
     public class GetingQueueDataTask extends AsyncTask<Void, Void, ArrayList<QueueBookClass>>{
 

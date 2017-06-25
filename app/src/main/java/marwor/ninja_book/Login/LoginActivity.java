@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -43,10 +45,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static marwor.ninja_book.MainActivity.contextOfAplication;
+
 
 /**
  * A login screen that offers login via email/password.
@@ -78,11 +81,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private boolean InternetConnectionAvailable;
+    public static Context contextOfAplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
+        contextOfAplication=getApplicationContext();
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -362,7 +370,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                //finish();
+                Intent startMainActivity=new Intent(LoginActivity.this,MainActivity.class);
+                startMainActivity.putExtra("isUserLogin","true");
+                startActivity(startMainActivity);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

@@ -16,7 +16,7 @@ import marwor.ninja_book.ShowQueue.ShowQueue;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    public static Context contextOfAplication;
+
     private Button buttonBorrow;
     private Button buttonReturn;
     private Button buttonQueue;
@@ -24,25 +24,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonComment;
     private Button buttonMyBooks;
     private Intent clickToAction;
-    private static boolean IsUserLogin=false;
+    private static boolean isUserLogin=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        contextOfAplication=getApplicationContext();
+
         SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
         editor.commit();
+       /* if(getIntent().getStringExtra("nextActivity").equals("true")){
+            isUserLogin=true;
+        }
 
-        if(IsUserLogin==false){
+        if(isUserLogin==false){
             Intent startLoggingActivity=new Intent(this,LoginActivity.class);
             startActivity(startLoggingActivity);
-        }
-        if(sharedPref.getLong("userId",-1)!=-1){
-            IsUserLogin=true;
-        }
+        }*/
+
         buttonBorrow=(Button) findViewById(R.id.borrow);
         buttonReturn=(Button) findViewById(R.id.returnBook);
         buttonQueue=(Button) findViewById(R.id.queue);
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonComment.setOnClickListener(this);
         buttonMyBooks.setOnClickListener(this);
 
+
     }
 
 
@@ -64,10 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.borrow:
                 clickToAction= new Intent(this, CameraActivity.class);
+                clickToAction.putExtra("nextActivity","Borrow");
                 startActivity(clickToAction);
                 break;
             case R.id.returnBook:
                 clickToAction= new Intent(this, CameraActivity.class);
+                clickToAction.putExtra("nextActivity","Return");
                 startActivity(clickToAction);
                 break;
             case R.id.queue:

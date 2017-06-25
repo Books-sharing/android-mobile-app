@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import marwor.ninja_book.Borrow.BorrowActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.ShowQueue.LoadingActivity;
 import marwor.ninja_book.R;
@@ -43,14 +45,14 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private BinaryBitmap binaryBitmap;
     private Result result;
     private BinaryBitmapMaker binaryBitmapMaker;
-
+    private String nextActivity;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
+        nextActivity=getIntent().getStringExtra("nextActivity");
         takePicture=(Button) findViewById(R.id.buttonTakePicture);
         takePicture.setOnClickListener(this);
         binaryBitmapMaker=new BinaryBitmapMaker();
@@ -92,14 +94,6 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         else
             mCamera.takePicture(null,null,null,mPicture);
     }
-
-
-
-
-        //mCamera.takePicture(null,null,null,mPicture);
-
-
-
 
     @Override
     public void onPause(){
@@ -175,15 +169,29 @@ public class CameraActivity extends Activity implements View.OnClickListener {
             catch (NotFoundException|ChecksumException|FormatException e) {
                 e.printStackTrace();
                 mCamera.release();
+
                 Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
                 startActivity (intent);
-                System.exit(1); // kill off the crashed app
+                Toast toast = Toast.makeText(getApplicationContext(),"Upewni się że cały kod QR znajduje się w polu widzenia aparatu", Toast.LENGTH_LONG);
+                toast.show();
+                //System.exit(1); // kill off the crashed app
 
             }
+            if(nextActivity.equals("Borrow")){
+                Intent i = new Intent(CameraActivity.this, BorrowActivity.class);
+                i.putExtra("qrResult",result.getText());
+                startActivity(i);
+            }else if(nextActivity=="Return"){
+                Intent i = new Intent(CameraActivity.this, LoadingActivity.class);
+                i.putExtra("qrResult",result.getText());
+                startActivity(i);
+            }else{
 
-            Intent i = new Intent(CameraActivity.this, LoadingActivity.class);
-            i.putExtra("qrResult",result.getText());
-            startActivity(i);
+                Intent i = new Intent(CameraActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+
+
 
 
 
@@ -194,8 +202,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private void handleUncaughtException (Thread thread, Throwable e)
     {
         mCamera.release();
+
         Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
         startActivity (intent);
+        Toast toast = Toast.makeText(getApplicationContext(),"Wystąpił błąd, zeskanuj kod jeszczce raz", Toast.LENGTH_LONG);
+        toast.show();
         System.exit(1); // kill off the crashed app
     }
 
