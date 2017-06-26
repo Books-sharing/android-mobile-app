@@ -13,7 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-import marwor.ninja_book.Camera.CameraActivity;
+
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
 
@@ -35,7 +35,7 @@ public class BorrowActivity extends AppCompatActivity {
 
     }
     public class BorrowTask extends AsyncTask<String, Void, Integer>{
-        HttpBorrowRequest borrowRequest=new HttpBorrowRequest();
+        BorrowHttpRequest borrowRequest=new BorrowHttpRequest();
         URL urlToBorrow=null;
 
 
@@ -49,7 +49,7 @@ public class BorrowActivity extends AppCompatActivity {
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
-            int response=borrowRequest.BorrowPutRequest(urlToBorrow,params[0],getApplicationContext());
+            int response=borrowRequest.BorrowPutRequest(urlToBorrow,params[0]);
 
 
             return response;

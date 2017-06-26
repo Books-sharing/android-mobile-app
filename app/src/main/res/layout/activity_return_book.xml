@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="marwor.ninja_book.ReturnBook">
+    tools:context="marwor.ninja_book.Return.ReturnActivity">
 
 </android.support.constraint.ConstraintLayout>

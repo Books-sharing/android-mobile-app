@@ -30,8 +30,8 @@ import java.util.Date;
 
 import marwor.ninja_book.Borrow.BorrowActivity;
 import marwor.ninja_book.MainActivity;
-import marwor.ninja_book.ShowQueue.LoadingActivity;
 import marwor.ninja_book.R;
+import marwor.ninja_book.Return.ReturnActivity;
 
 import static android.content.ContentValues.TAG;
 
@@ -169,11 +169,12 @@ public class CameraActivity extends Activity implements View.OnClickListener {
             catch (NotFoundException|ChecksumException|FormatException e) {
                 e.printStackTrace();
                 mCamera.release();
-
-                Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
-                startActivity (intent);
                 Toast toast = Toast.makeText(getApplicationContext(),"Upewni się że cały kod QR znajduje się w polu widzenia aparatu", Toast.LENGTH_LONG);
                 toast.show();
+                finish();
+                Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
+                startActivity (intent);
+
                 //System.exit(1); // kill off the crashed app
 
             }
@@ -181,10 +182,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
                 Intent i = new Intent(CameraActivity.this, BorrowActivity.class);
                 i.putExtra("qrResult",result.getText());
                 startActivity(i);
-            }else if(nextActivity=="Return"){
-                Intent i = new Intent(CameraActivity.this, LoadingActivity.class);
+            }else if(nextActivity.equals("Return")){
+                Intent i = new Intent(CameraActivity.this, ReturnActivity.class);
                 i.putExtra("qrResult",result.getText());
                 startActivity(i);
+
             }else{
 
                 Intent i = new Intent(CameraActivity.this, MainActivity.class);
@@ -202,11 +204,12 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private void handleUncaughtException (Thread thread, Throwable e)
     {
         mCamera.release();
-
-        Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
-        startActivity (intent);
         Toast toast = Toast.makeText(getApplicationContext(),"Wystąpił błąd, zeskanuj kod jeszczce raz", Toast.LENGTH_LONG);
         toast.show();
+        finish();
+        Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
+        startActivity (intent);
+
         System.exit(1); // kill off the crashed app
     }
 

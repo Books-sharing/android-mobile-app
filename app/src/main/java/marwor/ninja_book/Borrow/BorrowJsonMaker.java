@@ -16,7 +16,7 @@ public class BorrowJsonMaker {
             BorrowData = new JSONObject();
             BorrowData.put("data", bookID);
             } catch (JSONException e) {
-            Log.d("Ninjabook", "ERROR WHILE CREATING AUTHENTICATION JSON" + e.getMessage());
+            Log.d("Ninjabook", "ERROR WHILE CREATING BORROW JSON" + e.getMessage());
         }
         return BorrowData;
     }
