@@ -31,18 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.clear();
-        editor.commit();
-       /* if(getIntent().getStringExtra("nextActivity").equals("true")){
-            isUserLogin=true;
-        }
 
-        if(isUserLogin==false){
-            Intent startLoggingActivity=new Intent(this,LoginActivity.class);
-            startActivity(startLoggingActivity);
-        }*/
+
 
         buttonBorrow=(Button) findViewById(R.id.borrow);
         buttonReturn=(Button) findViewById(R.id.returnBook);

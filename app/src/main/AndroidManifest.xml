@@ -34,8 +34,7 @@
         <activity android:name=".AddComment" />
         <activity android:name=".SearchBook" />
         <activity android:name=".ShowQueue.ShowQueue" />
-        <activity android:name=".Camera.CameraActivity"
-            android:noHistory="true"/>
+        <activity android:name=".Camera.CameraActivity" />
         <activity android:name=".MyBooks.MyBooks" />
         <activity android:name=".Borrow.BorrowActivity" />
         <activity android:name=".Return.ReturnActivity"></activity>

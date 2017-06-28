@@ -169,9 +169,8 @@ public class CameraActivity extends Activity implements View.OnClickListener {
             catch (NotFoundException|ChecksumException|FormatException e) {
                 e.printStackTrace();
                 mCamera.release();
-                Toast toast = Toast.makeText(getApplicationContext(),"Upewni się że cały kod QR znajduje się w polu widzenia aparatu", Toast.LENGTH_LONG);
-                toast.show();
-                finish();
+
+
                 Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
                 startActivity (intent);
 
@@ -204,9 +203,8 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private void handleUncaughtException (Thread thread, Throwable e)
     {
         mCamera.release();
-        Toast toast = Toast.makeText(getApplicationContext(),"Wystąpił błąd, zeskanuj kod jeszczce raz", Toast.LENGTH_LONG);
-        toast.show();
-        finish();
+
+
         Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
         startActivity (intent);
 

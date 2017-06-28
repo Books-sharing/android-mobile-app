@@ -41,6 +41,7 @@ public class MyBooksJsonReader {
         String title = null;
         String author = null;
         String isbn = null;
+        Boolean canExtendBorrow=null;
         try {
             reader.beginObject();
             while (reader.hasNext()) {
@@ -55,6 +56,8 @@ public class MyBooksJsonReader {
                     borrowDate=reader.nextString();
                 }else if(name.equals("returnDate")) {
                     returnDate=reader.nextString();
+                }else if(name.equals("canExtendBorrow")){
+                    canExtendBorrow=reader.nextBoolean();
                 }
             }
 
