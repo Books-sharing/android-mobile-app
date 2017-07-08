@@ -17,5 +17,5 @@ android:orientation="vertical">
     style="@style/Widget.AppCompat.Button"
     android:layout_width="fill_parent"
     android:layout_height="62dp"
-    android:text="@string/TakePicture" />
+    android:text="@string/scan_qr_code" />
 </LinearLayout>

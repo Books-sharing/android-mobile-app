@@ -34,7 +34,7 @@ public class ReturnActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(String...params) {
             try{
-                urlToReturn = new URL("http://192.168.1.199:8080/api/borrow/return/");
+                urlToReturn = new URL("@string/url_to_return");
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }

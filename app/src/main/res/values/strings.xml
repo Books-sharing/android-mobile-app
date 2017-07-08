@@ -1,27 +1,45 @@
 <resources>
     <string name="app_name"> Ninja Book</string>
     <string name="hello_world">hello world</string>
-    <string name="wypozycz_ksiazke">Wypożycz książkę</string>
-    <string name="oddaj_ksiazke">Oddaj książkę</string>
-    <string name="moje_kolejki">Moje miejsce w kolejkach</string>
-    <string name="szukaj_ksiazki">Szukaj książki</string>
-    <string name="komentarz">Dodaj komentarz</string>
-    <string name="wypozyczone_ksiazki">Wypożyczone książki</string>
-    <string name="TakePicture">Skanuj kod QR</string>
+    <string name="borrow_book">Wypożycz książkę</string>
+    <string name="return_book">Oddaj książkę</string>
+    <string name="show_queues">Moje miejsce w kolejkach</string>
+    <string name="search_book">Szukaj książki</string>
+    <string name="comments">Dodaj komentarz</string>
+    <string name="my_books">Wypożyczone książki</string>
+
     <string name="title_activity_loading">LoadingActivity</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Logownie</string>
     <string name="No_internet_connection">Brak łączności z internetem. Prosze włączyć wifi lub transmisje danych</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="prompt_password">Hasło (optional)</string>
+    <string name="action_sign_in">Zaloguj</string>
+    <string name="action_sign_in_short">Zaloguj</string>
+    <string name="error_invalid_email">Błędny adres Email</string>
+    <string name="error_invalid_password">Hasło jest za krótkie</string>
+    <string name="error_incorrect_password">Błędne hasło</string>
+    <string name="error_field_required">To pole musi być uzupełnione</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+
+    <!-- Urls -->
+
+    <string name="url_to_borrow">http://192.168.1.199:8080/api/borrow/</string>
+    <string name="url_to_return">http://192.168.1.199:8080/api/borrow/return/</string>
+    <string name="url_show_queue">http://192.168.1.199:8080/api/notification/</string>
+    <string name="url_to_auth">http://192.168.1.199:8080/api/auth</string>
+    <string name="url_to_users">http://192.168.1.199:8080/api/users</string>
+    <string name="url_to_notification">http://192.168.1.199:8080/api/notification/</string>
+
+    <!-- Camera package strings -->
+    <string name="scan_qr_code">Skanuj kod QR</string>
+
+
+    <!-- Mybook package strings -->
+    <string name="days_to_return_book">Dni pozostałe do końca wypożyczenia:  </string>
+
+    <!-- Show queues package strings -->
+    <string name="place_in_queue">Twoje miejsce w kolejce:  </string>
+
 </resources>

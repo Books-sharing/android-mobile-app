@@ -31,7 +31,7 @@ public class MyBooksListAdapter extends ArrayAdapter<MyBooksBookClass> {
     public MyBooksListAdapter(ArrayList<MyBooksBookClass> data, Context context) {
         super(context, R.layout.my_book_list_element, data);
         this.data=data;
-        inscription="Dni pozostałe do końca wypożyczenia:  ";
+        inscription="@string/days_to_return_book";
         context= context;
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -45,7 +45,7 @@ public class MyBooksListAdapter extends ArrayAdapter<MyBooksBookClass> {
         viewHolder.title=(TextView) rowView.findViewById(R.id.bookTitleTextView);
         viewHolder.place=(TextView) rowView.findViewById(R.id.inscription);
         viewHolder.title.setText(data.get(position).getBookTitle());
-        viewHolder.place.setText(inscription+"0");
+        viewHolder.place.setText(inscription+DayToReturnCouter.DayToReturn(data.get(position).getReturnDate()));
 
         return rowView;
     }

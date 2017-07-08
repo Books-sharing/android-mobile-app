@@ -28,7 +28,7 @@ public class QueueListAdapter extends ArrayAdapter<QueueBookClass> {
     public QueueListAdapter(ArrayList<QueueBookClass> data, Context context) {
         super(context, R.layout.show_queue_list_element, data);
         this.data=data;
-        inscription="Twoje miejsce w kolejce:  ";
+        inscription="@strings/place_in_queue";
         context= context;
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

@@ -45,7 +45,7 @@ public class BorrowActivity extends AppCompatActivity {
             SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
 
             try{
-                urlToBorrow = new URL("http://192.168.1.199:8080/api/borrow/" + sharedPref.getLong("userId", 2));
+                urlToBorrow = new URL("@string/url_to_borrow" + sharedPref.getLong("userId", 2));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
