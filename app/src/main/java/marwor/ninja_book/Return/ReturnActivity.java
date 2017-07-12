@@ -1,5 +1,9 @@
 package marwor.ninja_book.Return;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import marwor.ninja_book.Borrow.BorrowActivity;
+import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
 
@@ -34,7 +39,7 @@ public class ReturnActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(String...params) {
             try{
-                urlToReturn = new URL("@string/url_to_return");
+                urlToReturn = new URL(getString(R.string.url_to_return));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
@@ -49,14 +54,54 @@ public class ReturnActivity extends AppCompatActivity {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
             if(integer==200){
-                toast = Toast.makeText(getApplicationContext(),"Ksiązka została poprawnie oddana",Toast.LENGTH_LONG);
-                toast.show();
+                ReturnPositiveDialog positiveDialog= new ReturnPositiveDialog();
+                positiveDialog.show(getFragmentManager(),"123");
             }if(integer==400){
-                toast = Toast.makeText(getApplicationContext(),"Ksiązka nie została oddana. Wystąpił bład. Sprónuj ponownie",Toast.LENGTH_LONG);
-                toast.show();
+                ReturnNegativeDialog negativeDialog= new ReturnNegativeDialog();
+                negativeDialog.show(getFragmentManager(),"123");
             }
-            Intent intent = new Intent(ReturnActivity.this, MainActivity.class);
-            startActivity (intent);
+
         }
+    }
+    private class ReturnPositiveDialog extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            AlertDialog.Builder borrowPositiveDialog = new AlertDialog.Builder(getActivity());
+            borrowPositiveDialog.setMessage(getString(R.string.return_positive_dialog))
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener(){
+
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(ReturnActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+
+                            }
+                    );
+            return borrowPositiveDialog.create();
+        }}
+    public class ReturnNegativeDialog extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            AlertDialog.Builder borrowNegativeDialog = new AlertDialog.Builder(getActivity());
+            borrowNegativeDialog.setMessage(getString(R.string.return_negative_dialog))
+                    .setPositiveButton(getString(R.string.return_try_again), new DialogInterface.OnClickListener(){
+
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(ReturnActivity.this, CameraActivity.class);
+                                    startActivity(intent);
+                                }
+
+                            }
+                    );
+            return borrowNegativeDialog.create();
+
+        }
+
     }
 }

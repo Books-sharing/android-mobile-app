@@ -56,7 +56,7 @@ public class ShowQueue extends AppCompatActivity {
             URL urlToNotification=null;
             ArrayList<QueueBookClass> queueList=new ArrayList<>();
             try{
-                urlToNotification = new URL("@string/url_show_queue" + sharedPref.getLong("userId", 2));
+                urlToNotification = new URL(getString(R.string.url_show_queue) + sharedPref.getLong("userId", 2));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }

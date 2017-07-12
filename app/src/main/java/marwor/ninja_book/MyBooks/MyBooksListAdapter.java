@@ -8,10 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 import marwor.ninja_book.R;
-import marwor.ninja_book.ShowQueue.QueueBookClass;
-import marwor.ninja_book.ShowQueue.QueueListAdapter;
+
+
+
 
 /**
  * Created by Marcin_stacjonarny on 2017-06-20.
@@ -19,7 +20,7 @@ import marwor.ninja_book.ShowQueue.QueueListAdapter;
 
 public class MyBooksListAdapter extends ArrayAdapter<MyBooksBookClass> {
     private Context context;
-    private String inscription;
+
     private static LayoutInflater inflater=null;
     private ArrayList<MyBooksBookClass> data;
     private static class Holder{
@@ -31,8 +32,8 @@ public class MyBooksListAdapter extends ArrayAdapter<MyBooksBookClass> {
     public MyBooksListAdapter(ArrayList<MyBooksBookClass> data, Context context) {
         super(context, R.layout.my_book_list_element, data);
         this.data=data;
-        inscription="@string/days_to_return_book";
-        context= context;
+        this.context=context;
+
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -40,13 +41,16 @@ public class MyBooksListAdapter extends ArrayAdapter<MyBooksBookClass> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
         View rowView;
+
         MyBooksListAdapter.Holder viewHolder= new MyBooksListAdapter.Holder();
         rowView = inflater.inflate(R.layout.my_book_list_element, null);
         viewHolder.title=(TextView) rowView.findViewById(R.id.bookTitleTextView);
         viewHolder.place=(TextView) rowView.findViewById(R.id.inscription);
         viewHolder.title.setText(data.get(position).getBookTitle());
-        viewHolder.place.setText(inscription+DayToReturnCouter.DayToReturn(data.get(position).getReturnDate()));
+        viewHolder.place.setText(context.getResources().getString(R.string.days_to_return_book)+DayToReturnCouter.DayToReturn(data.get(position).getReturnDate()));
 
         return rowView;
     }
+
+
 }

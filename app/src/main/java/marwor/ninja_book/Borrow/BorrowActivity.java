@@ -1,6 +1,10 @@
 package marwor.ninja_book.Borrow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-
+import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
 
@@ -45,7 +49,7 @@ public class BorrowActivity extends AppCompatActivity {
             SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
 
             try{
-                urlToBorrow = new URL("@string/url_to_borrow" + sharedPref.getLong("userId", 2));
+                urlToBorrow = new URL(getString(R.string.url_to_borrow) + sharedPref.getLong("userId", 2));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
@@ -59,14 +63,55 @@ public class BorrowActivity extends AppCompatActivity {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
             if(integer==200){
-                toast = Toast.makeText(getApplicationContext(),"Ksiązka została poprawnie wypożyczona",Toast.LENGTH_LONG);
-                toast.show();
+                BorrowPositiveDialog positiveDialog= new BorrowPositiveDialog();
+                positiveDialog.show(getFragmentManager(),"123");
             }if(integer==400){
-                toast = Toast.makeText(getApplicationContext(),"Ksiązka nie została wypożyczona. Wystąpił bład. Sprónuj ponownie",Toast.LENGTH_LONG);
-                toast.show();
+              BorrowNegativeDialog negativeDialog= new BorrowNegativeDialog();
+                negativeDialog.show(getFragmentManager(),"123");
             }
-            Intent intent = new Intent(BorrowActivity.this, MainActivity.class);
-            startActivity (intent);
+
         }
     }
+    private class BorrowPositiveDialog extends DialogFragment {
+        @Override
+                public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            AlertDialog.Builder borrowPositiveDialog = new AlertDialog.Builder(getActivity());
+            borrowPositiveDialog.setMessage(getString(R.string.borrow_positive_dialog))
+            .setPositiveButton("OK", new DialogInterface.OnClickListener(){
+
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(BorrowActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
+                }
+            );
+        return borrowPositiveDialog.create();
+        }}
+    public class BorrowNegativeDialog extends DialogFragment {
+                @Override
+                public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+                    AlertDialog.Builder borrowNegativeDialog = new AlertDialog.Builder(getActivity());
+                    borrowNegativeDialog.setMessage(getString(R.string.borrow_negative_dialog))
+                            .setPositiveButton(getString(R.string.borrow_try_again), new DialogInterface.OnClickListener(){
+
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(BorrowActivity.this, CameraActivity.class);
+                                            startActivity(intent);
+                                        }
+
+                                     }
+                                    );
+                    return borrowNegativeDialog.create();
+
+        }
+
+    }
 }
+

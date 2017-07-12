@@ -51,6 +51,7 @@ import marwor.ninja_book.R;
 import static android.Manifest.permission.READ_CONTACTS;
 
 
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -343,13 +344,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JsonReader userDataReader=null;
 
             try{
-                urlToAuth = new URL("@string/url_to_auth");
+                urlToAuth = new URL(getString(R.string.url_to_auth));
             }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
             }
             try{
 
-                urlToUsers = new URL("@string/url_to_users");
+                urlToUsers = new URL(getString(R.string.url_to_users));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }

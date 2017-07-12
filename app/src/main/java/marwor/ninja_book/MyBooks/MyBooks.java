@@ -51,7 +51,7 @@ public class MyBooks extends AppCompatActivity {
             URL urlToNotification=null;
             ArrayList<MyBooksBookClass> myBooksList=new ArrayList<>();
             try{
-                urlToNotification = new URL("@string/url_to_notification" + sharedPref.getLong("userId", 0));
+                urlToNotification = new URL(getString(R.string.url_to_notification) + sharedPref.getLong("userId", 0));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
             }
