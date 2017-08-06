@@ -25,12 +25,12 @@
 
     <!-- Urls -->
 
-    <string name="url_to_borrow">http://192.168.1.62:8080/api/borrow/</string>
-    <string name="url_to_return">http://192.168.1.62:8080/api/borrow/return/</string>
-    <string name="url_show_queue">http://192.168.1.62:8080/api/notification/</string>
-    <string name="url_to_auth">http://192.168.1.62:8080/api/auth</string>
-    <string name="url_to_users">http://192.168.1.62:8080/api/users</string>
-    <string name="url_to_notification">http://192.168.1.62:8080/api/notification/</string>
+    <string name="url_to_borrow">http://192.168.1.54:8080/api/borrow/</string>
+    <string name="url_to_return">http://192.168.1.54:8080/api/borrow/return/</string>
+    <string name="url_show_queue">http://192.168.1.54:8080/api/notification/</string>
+    <string name="url_to_auth">http://192.168.1.54:8080/api/auth</string>
+    <string name="url_to_users">http://192.168.1.54:8080/api/users</string>
+    <string name="url_to_notification">http://192.168.1.54:8080/api/notification/</string>
 
     <!-- Camera package strings -->
     <string name="scan_qr_code">Skanuj kod QR</string>
@@ -46,7 +46,7 @@
     <string name="borrow_positive_dialog">Książka została wypożyczona. </string>
     <string name="borrow_try_again">Spróbuj ponownie </string>
     <string name="borrow_negative_dialog">Książka nie została wypożyczona. </string>
-
+    <string name="progress_bar_message">Łączenie z serwerem</string>
     <!-- Return package strings -->
     <string name="return_positive_dialog">Książka została oddana. </string>
     <string name="return_try_again">Spróbuj ponownie </string>

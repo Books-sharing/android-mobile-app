@@ -169,21 +169,22 @@ public class CameraActivity extends Activity implements View.OnClickListener {
             catch (NotFoundException|ChecksumException|FormatException e) {
                 e.printStackTrace();
                 mCamera.release();
-
+                pictureFile.delete();
 
                 Intent intent = new Intent(CameraActivity.this, CameraActivity.class);
                 startActivity (intent);
 
-                //System.exit(1); // kill off the crashed app
-
             }
+
             if(nextActivity.equals("Borrow")){
                 Intent i = new Intent(CameraActivity.this, BorrowActivity.class);
                 i.putExtra("qrResult",result.getText());
+                pictureFile.delete();
                 startActivity(i);
             }else if(nextActivity.equals("Return")){
                 Intent i = new Intent(CameraActivity.this, ReturnActivity.class);
                 i.putExtra("qrResult",result.getText());
+                pictureFile.delete();
                 startActivity(i);
 
             }else{

@@ -3,6 +3,7 @@ package marwor.ninja_book.Return;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,14 +20,21 @@ import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
 
+import static java.lang.Thread.sleep;
+
 public class ReturnActivity extends AppCompatActivity {
     int response;
-    Toast toast;
+    private ProgressDialog progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_book);
         String bookId=getIntent().getStringExtra("qrResult");
+        progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(true);
+        progressBar.setMessage(getString(R.string.progress_bar_message));
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.show();
         ReturnTask returnTask=new ReturnTask();
         returnTask.execute(bookId);
         returnTask.onPostExecute(response);
