@@ -1,10 +1,12 @@
-package marwor.ninja_book.ShowQueueTests;
+package marwor.ninja_book.UnitTests.ShowQueueTests;
 
 import org.junit.Test;
+import org.mockito.Matchers;
 
 import marwor.ninja_book.ShowQueue.QueueBookClass;
 
-import static org.hamcrest.Matchers.is;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -21,8 +23,8 @@ public class QueueBookClassTest {
     @Test
     public void queueBookClassTest(){
         QueueBookClass queueBookClass=new QueueBookClass(exampleBookTitle,exampleBookAuthor,exampleBookISBN,exampleOrderDate,examplePlaceInQueue);
-        assertThat("Test Date",queueBookClass.getOrderDate(),is(exampleOrderDate));
-        assertThat("Test Title",queueBookClass.getBookTitle(),is(exampleBookTitle));
+        assertThat("Test Date",queueBookClass.getOrderDate(), is(exampleOrderDate));
+        assertThat("Test Title",queueBookClass.getBookTitle(), is(exampleBookTitle));
         assertThat("Test Author",queueBookClass.getBookAuthor(),is(exampleBookAuthor));
         assertThat("Test ISBN",queueBookClass.getBookISBN(),is(exampleBookISBN));
         assertThat("Test Place in Queue",queueBookClass.getPlaceInQueue(),is(examplePlaceInQueue));

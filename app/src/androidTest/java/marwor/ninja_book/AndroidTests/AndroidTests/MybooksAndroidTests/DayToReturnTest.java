@@ -1,4 +1,4 @@
-package marwor.ninja_book.MyBooksTests;
+package marwor.ninja_book.AndroidTests.AndroidTests.MybooksAndroidTests;
 
 import android.support.test.runner.AndroidJUnit4;
 
