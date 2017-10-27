@@ -10,17 +10,17 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import marwor.ninja_book.Borrow.BorrowActivity;
+
 import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
 
-import static java.lang.Thread.sleep;
+
 
 public class ReturnActivity extends AppCompatActivity {
     int response;

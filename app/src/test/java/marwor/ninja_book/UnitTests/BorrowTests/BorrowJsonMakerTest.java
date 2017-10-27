@@ -1,4 +1,4 @@
-package marwor.ninja_book.AndroidTests.AndroidTests.BorrowAndroidTests;
+package marwor.ninja_book.UnitTests.BorrowTests;
 
 import android.util.Log;
 
@@ -8,7 +8,8 @@ import org.junit.Test;
 
 import marwor.ninja_book.Borrow.BorrowJsonMaker;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
+
 import static org.junit.Assert.assertThat;
 
 /**
