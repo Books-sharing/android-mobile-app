@@ -25,13 +25,13 @@
 
     <!-- Urls -->
 
-    <string name="url_to_borrow">http://192.168.1.54:8080/api/borrow/</string>
-    <string name="url_to_return">http://192.168.1.54:8080/api/borrow/return/</string>
-    <string name="url_show_queue">http://192.168.1.54:8080/api/notification/</string>
-    <string name="url_to_auth">http://192.168.1.54:8080/api/auth</string>
-    <string name="url_to_users">http://192.168.1.54:8080/api/users</string>
-    <string name="url_to_notification">http://192.168.1.54:8080/api/notification/</string>
-    <string name="url_to_search">http://192.168.1.54:8080/api/search/</string>
+    <string name="url_to_borrow">http://192.168.0.199:8080/api/borrow/</string>
+    <string name="url_to_return">http://192.168.0.199:8080/api/borrow/return/</string>
+    <string name="url_show_queue">http://192.168.0.199:8080/api/notification/</string>
+    <string name="url_to_auth">http://192.168.0.199:8080/api/auth</string>
+    <string name="url_to_users">http://192.168.0.199:8080/api/users</string>
+    <string name="url_to_notification">http://192.168.0.199:8080/api/notification/</string>
+    <string name="url_to_search">http://192.168.0.199:8080/api/search/?query=</string>
     <!-- Camera package strings -->
     <string name="scan_qr_code">Skanuj kod QR</string>
 
@@ -54,8 +54,12 @@
     <string name="return_negative_dialog">Książka nie została oddana. </string>
 
     <!-- SearchBook package strings -->
-    <string name="search_book_title">Znajdź interesującą Cię książkę</string>
+    <string name="search_book_welcome_label">Znajdź interesującą Cię książkę</string>
     <string name="search_book_edit_text">Wpisz tytuł lub autora</string>
     <string name="search_book_button_text">Szukaj</string>
+    <string name="search_result_title">Tytuł:  </string>
+    <string name="search_result_author">Autor:  </string>
+    <string name="search_result_status">Status wypożyczenia:  </string>
+    <string name="search_result_description_label">Opis: </string>
 
 </resources>

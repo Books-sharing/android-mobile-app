@@ -37,7 +37,9 @@
         <activity android:name=".Camera.CameraActivity" />
         <activity android:name=".MyBooks.MyBooks" />
         <activity android:name=".Borrow.BorrowActivity" />
-        <activity android:name=".Return.ReturnActivity"></activity>
+        <activity android:name=".Return.ReturnActivity" />
+        <activity android:name=".SearchBook.SearchBookShowResultList" />
+        <activity android:name=".SearchBook.SearchBookResultDetails"></activity>
     </application>
 
 </manifest>

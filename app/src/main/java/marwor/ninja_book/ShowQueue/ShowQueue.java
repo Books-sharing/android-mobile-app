@@ -53,14 +53,15 @@ public class ShowQueue extends AppCompatActivity {
         protected ArrayList<QueueBookClass> doInBackground(Void... params) {
             SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
             ShowQueueHttpRequest showQueueHttpRequest=new ShowQueueHttpRequest();
-            URL urlToNotification=null;
+            //URL urlToNotification=null;
             ArrayList<QueueBookClass> queueList=new ArrayList<>();
-            try{
+            /*try{
                 urlToNotification = new URL(getString(R.string.url_show_queue) + sharedPref.getLong("userId", 2));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
-            }
-            queueList=showQueueHttpRequest.ShowQueueGetRequest(urlToNotification);
+            }*/
+            UrlToShowQueue urlToShowQueue=new UrlToShowQueue(getApplicationContext());
+            queueList=showQueueHttpRequest.ShowQueueGetRequest(urlToShowQueue.getUrl());
 
 
             return queueList;

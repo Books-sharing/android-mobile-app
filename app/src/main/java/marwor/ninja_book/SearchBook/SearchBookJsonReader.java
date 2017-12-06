@@ -55,6 +55,8 @@ public class SearchBookJsonReader {
                     description=reader.nextString();
                 }else if(name.equals("status")) {
                     status=reader.nextString();
+                }else{
+                    reader.skipValue();
                 }
             }
 

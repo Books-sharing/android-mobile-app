@@ -14,12 +14,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class SearchBookBookClassTest {
     @Test
             public void BookClassTest(){
-        SearchBookBookClass testClass=new SearchBookBookClass(4,"Author","Title","Isbn","Status");
-        assertThat("Test id",testClass.getId(),is(4));
+        SearchBookBookClass testClass=new SearchBookBookClass("Author","Title","Isbn","Status","Description");
         assertThat("Test author",testClass.getAuthor(),is("Author"));
         assertThat("Test title",testClass.getTitle(),is("Title"));
         assertThat("Test isbn",testClass.getIsbn(),is("Isbn"));
         assertThat("Test status",testClass.getStatus(),is("Status"));
+        assertThat("Test description",testClass.getDescription(),is("Description"));
     }
 
 }

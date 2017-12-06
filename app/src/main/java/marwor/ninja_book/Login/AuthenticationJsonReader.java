@@ -6,33 +6,30 @@ import android.util.JsonReader;
 
 import java.io.IOException;
 
+import marwor.ninja_book.UserData;
+
 /**
  * Created by HP on 2017-06-11.
  */
 
 public class AuthenticationJsonReader {
     public void ReadUserDataJson(android.util.JsonReader reader, Context context){
-        SharedPreferences sharedPref = context.getSharedPreferences("UserData", context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        UserData userData=new UserData(context);
         try {
             reader.beginObject();
             while (reader.hasNext()) {
                 String name = reader.nextName();
                 if (name.equals("id")) {
-                    editor.putLong("userId", reader.nextLong());
-                    editor.commit();
+                userData.setUserId(reader.nextLong());
                 }
                 if (name.equals("firstName")) {
-                    editor.putString("userFirstName", reader.nextString());
-                    editor.commit();
+                    userData.setUserFirstName(reader.nextString());
                 }
                 if (name.equals("lastName")) {
-                    editor.putString("userLastName", reader.nextString());
-                    editor.commit();
+                    userData.setUserLastName(reader.nextString());
                 }
                 if (name.equals("email")) {
-                    editor.putString("userEmail", reader.nextString());
-                    editor.commit();
+                    userData.setUserEmail(reader.nextString());
                 }
 
             }
@@ -41,21 +38,19 @@ public class AuthenticationJsonReader {
         }
     }
     public void ReadTokenJson(JsonReader reader,Context context){
-        String token=null;
-        SharedPreferences sharedPref = context.getSharedPreferences("UserData", context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        UserData userData=new UserData(context);
+
         try {
             reader.beginObject();
             String name = reader.nextName();
 
             if (name.equals("token")) {
-                token = reader.nextString();
+                userData.setToken(reader.nextString());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        editor.putString("token", token);
-        editor.commit();
+
 
     }
 }

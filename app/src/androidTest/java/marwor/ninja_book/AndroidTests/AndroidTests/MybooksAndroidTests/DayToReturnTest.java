@@ -17,6 +17,6 @@ import static org.junit.Assert.assertThat;
 public class DayToReturnTest {
     @Test
     public void TestDayToReturn(){
-        assertThat(DayToReturnCouter.DayToReturn("2017-07-16"),is(7));
+        assertThat(DayToReturnCouter.DayToReturn("2017-11-12"),is(7));
     }
 }

@@ -47,6 +47,7 @@ public class SearchBookHttpRequest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return searchResult;
     }
 
 }

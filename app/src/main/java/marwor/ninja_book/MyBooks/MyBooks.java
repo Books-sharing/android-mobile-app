@@ -11,6 +11,7 @@ import android.widget.ListView;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import marwor.ninja_book.R;
 import marwor.ninja_book.ShowQueue.QueueBookClass;
@@ -48,14 +49,10 @@ public class MyBooks extends AppCompatActivity {
         protected ArrayList<MyBooksBookClass> doInBackground(Void... params) {
             SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
             MyBooksHttpRequest myBooksHttpRequest=new MyBooksHttpRequest();
-            URL urlToNotification=null;
             ArrayList<MyBooksBookClass> myBooksList=new ArrayList<>();
-            try{
-                urlToNotification = new URL(getString(R.string.url_to_notification) + sharedPref.getLong("userId", 0));
-            }catch(MalformedURLException e){
-                Log.d("Nnjabook","urlconnection");
-            }
-            myBooksList=myBooksHttpRequest.MyBooksGetRequest(urlToNotification);
+
+           UrlToMyBooks urlToMyBooks=new UrlToMyBooks(getApplicationContext());
+            myBooksList=myBooksHttpRequest.MyBooksGetRequest(urlToMyBooks.getUrl());
 
 
             return myBooksList;

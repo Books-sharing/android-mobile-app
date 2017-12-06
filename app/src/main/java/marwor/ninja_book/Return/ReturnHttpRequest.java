@@ -14,7 +14,7 @@ import java.net.URL;
 public class ReturnHttpRequest {
 
 
-    public int ReturnPostRequest(URL url, String bookId){
+    public int ReturnPostRequest(URL url, String bookId,String token){
 
         ReturnJsonMaker jsonMaker=new ReturnJsonMaker();
         HttpURLConnection urlConnectionToReturn = null;
@@ -22,7 +22,7 @@ public class ReturnHttpRequest {
         try {
             urlConnectionToReturn = (HttpURLConnection) url.openConnection();
             urlConnectionToReturn.setRequestMethod("POST");
-            urlConnectionToReturn.setRequestProperty("Content-Type", "application/json");
+            urlConnectionToReturn.setRequestProperty("Authorization","Bearer "+token);
             urlConnectionToReturn.setChunkedStreamingMode(0);
             JSONObject returnData=jsonMaker.ReturnJson(bookId);
 

@@ -26,6 +26,7 @@ import java.net.URL;
 import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
+import marwor.ninja_book.UserData;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static java.lang.Thread.sleep;
@@ -56,18 +57,20 @@ public class BorrowActivity extends AppCompatActivity {
     }
     public class BorrowTask extends AsyncTask<String, Void, Integer>{
         BorrowHttpRequest borrowRequest=new BorrowHttpRequest();
-        URL urlToBorrow=null;
+        UserData userData=new UserData(getApplicationContext());
+        //URL urlToBorrow=null;
 
         @Override
         protected Integer doInBackground(String ...params) {
-            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
+/*            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
 
             try{
                 urlToBorrow = new URL(getString(R.string.url_to_borrow) + sharedPref.getLong("userId", 2));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
-            }
-            int response=borrowRequest.BorrowPutRequest(urlToBorrow,params[0]);
+            }*/
+            UrlToBorrow urlToBorrow=new UrlToBorrow(getApplicationContext());
+            int response=borrowRequest.BorrowPutRequest(urlToBorrow.getUrl(),params[0],userData.getToken());
 
 
             return response;

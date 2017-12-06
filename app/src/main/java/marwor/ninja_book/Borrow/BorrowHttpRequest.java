@@ -11,6 +11,8 @@ import java.net.HttpURLConnection;
 
 import java.net.URL;
 
+import marwor.ninja_book.UserData;
+
 /**
  * Created by Marcin_stacjonarny on 2017-06-25.
  */
@@ -19,12 +21,12 @@ public class BorrowHttpRequest {
     HttpURLConnection urlConnectionToBorrow = null;
     BorrowJsonMaker jsonMaker=new BorrowJsonMaker();
 
-    public int BorrowPutRequest(URL url,String bookId){
+    public int BorrowPutRequest(URL url,String bookId,String token){
         int response=0;
         try {
             urlConnectionToBorrow = (HttpURLConnection) url.openConnection();
             urlConnectionToBorrow.setRequestMethod("PUT");
-            urlConnectionToBorrow.setRequestProperty("Content-Type", "application/json");
+            urlConnectionToBorrow.setRequestProperty("Authorization","Bearer "+token);
             urlConnectionToBorrow.setChunkedStreamingMode(0);
             JSONObject borrowData=jsonMaker.BorrowJson(bookId);
 

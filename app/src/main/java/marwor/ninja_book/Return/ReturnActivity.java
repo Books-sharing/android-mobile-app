@@ -9,17 +9,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 
 import marwor.ninja_book.Camera.CameraActivity;
 import marwor.ninja_book.MainActivity;
 import marwor.ninja_book.R;
-
+import marwor.ninja_book.UserData;
 
 
 public class ReturnActivity extends AppCompatActivity {
@@ -41,17 +36,19 @@ public class ReturnActivity extends AppCompatActivity {
 
     }
     private class ReturnTask extends AsyncTask<String,Void,Integer>{
-        URL urlToReturn;
+        //URL urlToReturn;
         ReturnHttpRequest returnRequest=new ReturnHttpRequest();
         Integer response=0;
+        UserData userData=new UserData(getApplicationContext());
         @Override
         protected Integer doInBackground(String...params) {
-            try{
+  /*          try{
                 urlToReturn = new URL(getString(R.string.url_to_return));
             }catch(MalformedURLException e){
                 Log.d("Nnjabook","urlconnection");
-            }
-            response=returnRequest.ReturnPostRequest(urlToReturn,params[0]);
+            }*/
+            UrlToReturn urlToReturn=new UrlToReturn(getApplicationContext());
+            response=returnRequest.ReturnPostRequest(urlToReturn.getUrl(),params[0],userData.getToken());
 
 
 

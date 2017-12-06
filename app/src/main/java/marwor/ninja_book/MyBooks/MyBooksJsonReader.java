@@ -54,10 +54,12 @@ public class MyBooksJsonReader {
                     isbn = reader.nextString();
                 } else if(name.equals("borrowDate")) {
                     borrowDate=reader.nextString();
-                }else if(name.equals("returnDate")) {
+                }else if(name.equals("expectedReturnDate")) {
                     returnDate=reader.nextString();
                 }else if(name.equals("canExtendBorrow")){
                     canExtendBorrow=reader.nextBoolean();
+                }else{
+                    reader.skipValue();
                 }
             }
 

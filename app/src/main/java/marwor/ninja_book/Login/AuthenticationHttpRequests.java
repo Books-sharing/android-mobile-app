@@ -23,11 +23,9 @@ public class AuthenticationHttpRequests {
     /*AuthenticationPostRequest funtion conect with serwer, sending user email and password in json. If email and password is correct, serwer send to app jwtk token */
     public void AuthenticationPostRequest(URL url, String mail, String password,Context context){
         HttpURLConnection urlConnectionToAuth=null;
-        String token=null;
         AuthenticationJsonMaker jsonMaker=new AuthenticationJsonMaker();
-        SharedPreferences sharedPref = context.getSharedPreferences("UserData", context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
         AuthenticationJsonReader authenticationJsonReader=new AuthenticationJsonReader();
+
         try{
             urlConnectionToAuth = (HttpURLConnection) url.openConnection();
             urlConnectionToAuth.setDoOutput(true);
@@ -56,9 +54,8 @@ public class AuthenticationHttpRequests {
     }
 public void AutenticationGetRequest(URL url,String token,Context context){
     HttpURLConnection urlConnectionToUsers = null;
-    SharedPreferences sharedPref = context.getSharedPreferences("UserData", context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPref.edit();
     AuthenticationJsonReader authenticationJsonReader=new AuthenticationJsonReader();
+
     try{
         urlConnectionToUsers = (HttpURLConnection) url.openConnection();
         urlConnectionToUsers.setRequestMethod("GET");

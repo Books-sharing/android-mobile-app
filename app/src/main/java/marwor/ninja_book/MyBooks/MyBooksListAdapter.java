@@ -49,6 +49,7 @@ public class MyBooksListAdapter extends ArrayAdapter<MyBooksBookClass> {
         viewHolder.title.setText(data.get(position).getBookTitle());
         viewHolder.place.setText(context.getResources().getString(R.string.days_to_return_book)+DayToReturnCouter.DayToReturn(data.get(position).getReturnDate()));
 
+
         return rowView;
     }
 

@@ -327,27 +327,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             AuthenticationHttpRequests httpRequests=new AuthenticationHttpRequests();
-            URL urlToAuth=null;
-            URL urlToUsers=null;
+            URL urlToAuth;
+            URL urlToUser;
             String token=null;
             Long userId=-1L;
+
            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             JsonReader userDataReader=null;
 
-            try{
-                urlToAuth = new URL(getString(R.string.url_to_auth));
-            }catch(MalformedURLException e){
-            Log.d("Nnjabook","urlconnection");
-            }
-            try{
+            UrlToAuthorization urlToAuthorization=new UrlToAuthorization(getApplicationContext());
+            UrlToUsers urlToUsers=new UrlToUsers(getApplicationContext());
 
-                urlToUsers = new URL(getString(R.string.url_to_users));
-            }catch(MalformedURLException e){
-                Log.d("Nnjabook","urlconnection");
-            }
+            urlToUser=urlToUsers.getUrl();
+            urlToAuth=urlToAuthorization.getUrl();
+
+
             httpRequests.AuthenticationPostRequest(urlToAuth,mEmail,mPassword,contextOfAplication);
-            httpRequests.AutenticationGetRequest(urlToUsers,sharedPref.getString("token","error"),contextOfAplication);
+            httpRequests.AutenticationGetRequest(urlToUser,sharedPref.getString("token","error"),contextOfAplication);
 
           userId=sharedPref.getLong("userId",-1);
             token=sharedPref.getString("token","error");

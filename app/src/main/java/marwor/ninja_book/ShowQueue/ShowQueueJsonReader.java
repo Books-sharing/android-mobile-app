@@ -38,6 +38,7 @@ public class ShowQueueJsonReader {
         String title = null;
         String author = null;
         String isbn = null;
+        int id=0;
         int place = -1;
         try {
             reader.beginObject();
@@ -45,14 +46,18 @@ public class ShowQueueJsonReader {
                 String name = reader.nextName();
                  if (name.equals("title")) {
                     title = reader.nextString();
-                } else if (name.equals("author")) {
-                    author = reader.nextString();
+                 }else if (name.equals("author")) {
+                     author = reader.nextString();
+                 }else if (name.equals("id")) {
+                    id= reader.nextInt();
                 } else if (name.equals("isbn")) {
                     isbn = reader.nextString();
                 } else if(name.equals("orderDate")) {
                     orderDate=reader.nextString();
                 }else if(name.equals("positionInQueue")) {
                      place=reader.nextInt();
+                 }else{
+                     reader.skipValue();
                  }
             }
 
