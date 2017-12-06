@@ -19,21 +19,14 @@ import marwor.ninja_book.UserData;
 
 public class BorrowHttpRequest {
     HttpURLConnection urlConnectionToBorrow = null;
-    BorrowJsonMaker jsonMaker=new BorrowJsonMaker();
 
-    public int BorrowPutRequest(URL url,String bookId,String token){
+    public int BorrowPutRequest(URL url,String token){
         int response=0;
         try {
             urlConnectionToBorrow = (HttpURLConnection) url.openConnection();
-            urlConnectionToBorrow.setRequestMethod("PUT");
+            urlConnectionToBorrow.setRequestMethod("POST");
             urlConnectionToBorrow.setRequestProperty("Authorization","Bearer "+token);
             urlConnectionToBorrow.setChunkedStreamingMode(0);
-            JSONObject borrowData=jsonMaker.BorrowJson(bookId);
-
-            DataOutputStream outBorrowData = new DataOutputStream(urlConnectionToBorrow.getOutputStream());
-            outBorrowData.writeBytes(borrowData.toString());
-            outBorrowData.flush();
-            outBorrowData.close();
 
             response=urlConnectionToBorrow.getResponseCode();
 

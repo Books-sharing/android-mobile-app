@@ -58,19 +58,13 @@ public class BorrowActivity extends AppCompatActivity {
     public class BorrowTask extends AsyncTask<String, Void, Integer>{
         BorrowHttpRequest borrowRequest=new BorrowHttpRequest();
         UserData userData=new UserData(getApplicationContext());
-        //URL urlToBorrow=null;
+
 
         @Override
         protected Integer doInBackground(String ...params) {
-/*            SharedPreferences sharedPref = getSharedPreferences("UserData", Activity.MODE_PRIVATE);
 
-            try{
-                urlToBorrow = new URL(getString(R.string.url_to_borrow) + sharedPref.getLong("userId", 2));
-            }catch(MalformedURLException e){
-                Log.d("Nnjabook","urlconnection");
-            }*/
-            UrlToBorrow urlToBorrow=new UrlToBorrow(getApplicationContext());
-            int response=borrowRequest.BorrowPutRequest(urlToBorrow.getUrl(),params[0],userData.getToken());
+            UrlToBorrow urlToBorrow=new UrlToBorrow(getApplicationContext(),params[0]);
+            int response=borrowRequest.BorrowPutRequest(urlToBorrow.getUrl(),userData.getToken());
 
 
             return response;

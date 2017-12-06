@@ -17,11 +17,11 @@ import marwor.ninja_book.UserData;
 public class UrlToReturn {
     private URL urlToReturn=null;
 
-    public UrlToReturn(Context context){
+    public UrlToReturn(Context context,String bookId){
 
         Resources res=context.getResources();
         try{
-            urlToReturn = new URL(context.getString(R.string.url_to_return));
+            urlToReturn = new URL(context.getString(R.string.url_to_return)+bookId);
         }catch(MalformedURLException e){
             Log.d("Nnjabook","urlconnection");
         }

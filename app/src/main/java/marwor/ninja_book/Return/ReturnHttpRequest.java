@@ -14,22 +14,15 @@ import java.net.URL;
 public class ReturnHttpRequest {
 
 
-    public int ReturnPostRequest(URL url, String bookId,String token){
+    public int ReturnPostRequest(URL url,String token){
 
-        ReturnJsonMaker jsonMaker=new ReturnJsonMaker();
+
         HttpURLConnection urlConnectionToReturn = null;
         int response=0;
         try {
             urlConnectionToReturn = (HttpURLConnection) url.openConnection();
             urlConnectionToReturn.setRequestMethod("POST");
             urlConnectionToReturn.setRequestProperty("Authorization","Bearer "+token);
-            urlConnectionToReturn.setChunkedStreamingMode(0);
-            JSONObject returnData=jsonMaker.ReturnJson(bookId);
-
-            DataOutputStream outReturnData = new DataOutputStream(urlConnectionToReturn.getOutputStream());
-            outReturnData.writeBytes(returnData.toString());
-            outReturnData.flush();
-            outReturnData.close();
 
             response=urlConnectionToReturn.getResponseCode();
 

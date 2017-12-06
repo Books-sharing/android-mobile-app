@@ -17,11 +17,11 @@ import marwor.ninja_book.UserData;
 public class UrlToBorrow {
     private URL urlToBorrow=null;
 
-    public UrlToBorrow(Context context){
+    public UrlToBorrow(Context context,String bookId){
         UserData userData=new UserData(context);
         Resources res=context.getResources();
         try{
-            urlToBorrow = new URL(context.getString(R.string.url_to_borrow) + Long.toString(userData.getUserId()));
+            urlToBorrow = new URL(context.getString(R.string.url_to_borrow) + Long.toString(userData.getUserId())+"/"+"?qrCode="+bookId);
         }catch(MalformedURLException e){
 
         }

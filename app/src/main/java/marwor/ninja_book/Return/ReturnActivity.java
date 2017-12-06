@@ -42,13 +42,9 @@ public class ReturnActivity extends AppCompatActivity {
         UserData userData=new UserData(getApplicationContext());
         @Override
         protected Integer doInBackground(String...params) {
-  /*          try{
-                urlToReturn = new URL(getString(R.string.url_to_return));
-            }catch(MalformedURLException e){
-                Log.d("Nnjabook","urlconnection");
-            }*/
-            UrlToReturn urlToReturn=new UrlToReturn(getApplicationContext());
-            response=returnRequest.ReturnPostRequest(urlToReturn.getUrl(),params[0],userData.getToken());
+
+            UrlToReturn urlToReturn=new UrlToReturn(getApplicationContext(),params[0]);
+            response=returnRequest.ReturnPostRequest(urlToReturn.getUrl(),userData.getToken());
 
 
 
